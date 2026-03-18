@@ -255,7 +255,7 @@ function selectPriority(el, p) {
   selectedPriority = p;
 }
 
-function submitReport() {
+async function submitReport() {
   const name    = document.getElementById("f-name").value.trim();
   const email   = document.getElementById("f-email").value.trim();
   const title   = document.getElementById("f-title").value.trim();
@@ -271,24 +271,36 @@ function submitReport() {
   const typeLabels = { bug: "Bug", question: "Question", feature: "Suggestion" };
   const prioLabels = { low: "Faible", medium: "Moyenne", high: "Bloquant" };
 
-  const subject = encodeURIComponent(`[LibreCDI ${typeLabels[selectedType]}] ${title}`);
-  const body = encodeURIComponent(
-    `Type : ${typeLabels[selectedType]}\n` +
-    (selectedType === "bug" ? `Priorite : ${prioLabels[selectedPriority]}\n` : "") +
-    `Version : ${version || "Non renseignée"}\n` +
-    `OS : ${os || "Non renseigné"}\n` +
-    `Nom : ${name}\n` +
-    `Email : ${email}\n\n` +
-    `--- Description ---\n${desc}`
-  );
+  const btn = document.querySelector("button.btn-primary");
+  btn.disabled = true;
+  btn.textContent = "Envoi en cours...";
 
-  window.location.href = `mailto:contact@librecdi.fr?subject=${subject}&body=${body}`;
+  const data = new FormData();
+  data.append("name",     name);
+  data.append("email",    email);
+  data.append("type",     typeLabels[selectedType]);
+  data.append("priority", selectedType === "bug" ? prioLabels[selectedPriority] : "—");
+  data.append("version",  version || "Non renseigne");
+  data.append("os",       os      || "Non renseigne");
+  data.append("title",    title);
+  data.append("message",  desc);
 
-  // Afficher succès après 1s
-  setTimeout(() => {
-    document.getElementById("formState").style.display = "none";
-    document.getElementById("successState").style.display = "block";
-  }, 800);
+  try {
+    const r = await fetch("https://formspree.io/f/xzdjyryk", {
+      method: "POST", body: data,
+      headers: { "Accept": "application/json" }
+    });
+    if (r.ok) {
+      document.getElementById("formState").style.display = "none";
+      document.getElementById("successState").style.display = "block";
+    } else {
+      throw new Error("Erreur serveur");
+    }
+  } catch(err) {
+    alert("Erreur lors de l'envoi. Reessayez ou ecrivez a mathieu.gaillardin@gmail.com");
+    btn.disabled = false;
+    btn.textContent = "Envoyer le rapport";
+  }
 }
 
 // Initialiser

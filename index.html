@@ -214,22 +214,37 @@ nav {
 }
 .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
 .mockup-content {
-  min-height: 360px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--faint); font-size: 14px;
-  padding: 32px;
+  min-height: 360px; position: relative; overflow: hidden;
+  background: var(--bg);
+}
+.mockup-slides { display: flex; transition: transform 0.4s ease; }
+.mockup-slide { min-width: 100%; position: relative; }
+.mockup-slide img { width: 100%; height: auto; display: block; }
+.mockup-slide-label {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  background: rgba(15,15,26,0.85); backdrop-filter: blur(8px);
+  color: var(--muted); font-size: 12px; padding: 4px 14px;
+  border-radius: 20px; border: 1px solid var(--border); white-space: nowrap;
+}
+.mockup-nav {
+  display: flex; justify-content: center; gap: 8px;
+  padding: 14px; background: var(--surface2); border-top: 1px solid var(--border);
+}
+.mockup-nav-btn {
+  padding: 5px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border2); background: var(--surface);
+  color: var(--muted); cursor: pointer; transition: all 0.2s;
+}
+.mockup-nav-btn.active { background: var(--purple); color: var(--bg); border-color: var(--purple); }
+.mockup-nav-btn:hover:not(.active) { background: var(--border2); }
+.mockup-placeholder {
+  min-height: 360px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; padding: 32px;
   background:
     repeating-linear-gradient(0deg, transparent, transparent 31px, var(--border) 31px, var(--border) 32px),
     repeating-linear-gradient(90deg, transparent, transparent 31px, var(--border) 31px, var(--border) 32px);
 }
-.mockup-content img {
-  width: 100%; height: auto; display: block;
-  border-radius: 4px;
-}
-.mockup-placeholder {
-  text-align: center;
-}
-.mockup-placeholder div { font-size: 32px; margin-bottom: 12px; }
+.mockup-placeholder .icon { font-size: 32px; margin-bottom: 12px; }
 
 /* ── HOW IT WORKS ── */
 .steps { display: flex; flex-direction: column; gap: 0; }
@@ -396,12 +411,32 @@ footer a:hover { color: var(--muted); }
           <span style="color:#6c7086;font-size:11px">https://localhost:8443</span>
         </div>
       </div>
-      <div class="mockup-content">
-        <!-- Remplacer par une vraie capture d'écran : <img src="screenshots/dashboard.png" alt="Interface LibreCDI"> -->
-        <div class="mockup-placeholder">
-          <div>📸</div>
-          <div style="color:var(--faint);font-size:13px">Capture d'écran à venir<br><span style="font-size:11px">Remplacez par screenshots/dashboard.png</span></div>
+      <div class="mockup-content" id="mockupArea">
+        <div class="mockup-slides" id="mockupSlides">
+          <div class="mockup-slide">
+            <img src="screenshots/screenshot-dashboard.png" alt="Tableau de bord LibreCDI"
+                 onerror="document.getElementById('mockupArea').innerHTML='<div class=\'mockup-placeholder\'><div class=\'icon\'>📸</div><div style=\'color:var(--faint);font-size:13px\'>Captures à venir</div></div>'">
+            <div class="mockup-slide-label">Tableau de bord</div>
+          </div>
+          <div class="mockup-slide">
+            <img src="screenshots/screenshot-books.png" alt="Catalogue de livres">
+            <div class="mockup-slide-label">Catalogue de livres</div>
+          </div>
+          <div class="mockup-slide">
+            <img src="screenshots/screenshot-loans.png" alt="Gestion des emprunts">
+            <div class="mockup-slide-label">Emprunts</div>
+          </div>
+          <div class="mockup-slide">
+            <img src="screenshots/screenshot-students.png" alt="Gestion des élèves">
+            <div class="mockup-slide-label">Élèves</div>
+          </div>
         </div>
+      </div>
+      <div class="mockup-nav">
+        <button class="mockup-nav-btn active" onclick="goSlide(0)">Tableau de bord</button>
+        <button class="mockup-nav-btn" onclick="goSlide(1)">Livres</button>
+        <button class="mockup-nav-btn" onclick="goSlide(2)">Emprunts</button>
+        <button class="mockup-nav-btn" onclick="goSlide(3)">Élèves</button>
       </div>
     </div>
   </div>
@@ -564,7 +599,7 @@ footer a:hover { color: var(--muted); }
       <div style="display:flex;flex-direction:column;gap:20px">
         <div>
           <div style="font-size:12px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Email</div>
-          <div style="color:var(--blue)">contact@librecdi.fr</div>
+          <div style="color:var(--blue)">mathieu.gaillardin@gmail.com</div>
         </div>
         <div>
           <div style="font-size:12px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Support technique</div>
@@ -594,8 +629,8 @@ footer a:hover { color: var(--muted); }
         <label class="form-label">Message *</label>
         <textarea class="form-input" name="message" required placeholder="Votre message..."></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Envoyer le message</button>
-      <div id="contactMsg" style="display:none;font-size:13px;color:var(--green);margin-top:8px"></div>
+      <button type="submit" class="btn btn-primary" id="contactBtn">Envoyer le message</button>
+      <div id="contactMsg" style="display:none;font-size:13px;margin-top:8px"></div>
     </form>
   </div>
 </section>
@@ -620,16 +655,45 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Contact form (mailto fallback)
-function submitContact(e) {
+// Carousel screenshots
+let currentSlide = 0;
+function goSlide(n) {
+  currentSlide = n;
+  const slides = document.getElementById('mockupSlides');
+  if (slides) slides.style.transform = 'translateX(-' + (n * 100) + '%)';
+  document.querySelectorAll('.mockup-nav-btn').forEach((b, i) => b.classList.toggle('active', i === n));
+}
+setInterval(() => goSlide((currentSlide + 1) % 4), 4000);
+
+// Contact form — Formspree
+async function submitContact(e) {
   e.preventDefault();
-  const f = e.target;
-  const body = encodeURIComponent(
-    `Nom: ${f.name.value}\nEmail: ${f.email.value}\nEtablissement: ${f.establishment.value}\n\n${f.message.value}`
-  );
-  window.location.href = `mailto:contact@librecdi.fr?subject=Demande%20LibreCDI&body=${body}`;
-  document.getElementById('contactMsg').style.display = 'block';
-  document.getElementById('contactMsg').textContent = 'Ouverture de votre client email...';
+  const btn = document.getElementById('contactBtn');
+  const msg = document.getElementById('contactMsg');
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours...';
+  const data = new FormData(e.target);
+  try {
+    const r = await fetch('https://formspree.io/f/xyknlwln', {
+      method: 'POST', body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (r.ok) {
+      msg.style.display = 'block';
+      msg.style.color = 'var(--green)';
+      msg.textContent = 'Message envoye ! Nous vous repondrons sous 24h.';
+      e.target.reset();
+    } else {
+      throw new Error('Erreur serveur');
+    }
+  } catch(err) {
+    msg.style.display = 'block';
+    msg.style.color = 'var(--red)';
+    msg.textContent = 'Erreur lors de l'envoi. Reessayez ou ecrivez directement a mathieu.gaillardin@gmail.com';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Envoyer le message';
+  }
 }
 </script>
 </body>

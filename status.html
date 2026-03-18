@@ -146,25 +146,12 @@ footer a:hover{color:var(--muted);}
       </div>
       <div class="service-right">
         <span class="service-latency" id="lat-license">—</span>
-        <a href="https://librecdi-license-server.onrender.com/admin" target="_blank" class="service-link">Ouvrir →</a>
         <span class="status-badge badge-checking checking-anim" id="badge-license">
           <span class="dot"></span> Vérification
         </span>
       </div>
     </div>
 
-    <div class="service-row">
-      <div class="service-info">
-        <div class="service-name">API de validation</div>
-        <div class="service-sub">Endpoint /api/validate</div>
-      </div>
-      <div class="service-right">
-        <span class="service-latency" id="lat-api">—</span>
-        <span class="status-badge badge-checking checking-anim" id="badge-api">
-          <span class="dot"></span> Vérification
-        </span>
-      </div>
-    </div>
 
     <div class="service-row">
       <div class="service-info">
@@ -246,32 +233,6 @@ async function checkLicenseServer() {
   }
 }
 
-async function checkApi() {
-  const start = Date.now();
-  try {
-    const ctrl = new AbortController();
-    setTimeout(() => ctrl.abort(), 8000);
-    // POST vide — on attend juste un 401/400, pas un timeout
-    const r = await fetch(LICENSE_SERVER + "/api/validate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
-      signal: ctrl.signal
-    });
-    const ms = Date.now() - start;
-    // 401 = serveur répond (clé manquante) = OK
-    if (r.status === 401 || r.status === 400 || r.status === 200) {
-      setBadge("badge-api", "ok", "Opérationnel");
-      setLatency("lat-api", ms);
-      return true;
-    }
-    setBadge("badge-api", "warn", "Dégradé");
-    return false;
-  } catch(e) {
-    setBadge("badge-api", "down", "Hors ligne");
-    return false;
-  }
-}
 
 async function checkGitHub() {
   const start = Date.now();
@@ -320,16 +281,17 @@ function renderReleases(releases) {
 
 async function checkAll() {
   // Reset
-  ["license","api","gh"].forEach(id => {
+  ["license","gh"].forEach(id => {
     setBadge("badge-"+id, "checking checking-anim", "Vérification");
     setLatency("lat-"+id, null);
   });
   document.getElementById("overallDot").className = "overall-dot checking checking-anim";
   document.getElementById("overallTitle").textContent = "Vérification en cours...";
 
-  const [licOk, apiOk, ghOk] = await Promise.all([
-    checkLicenseServer(), checkApi(), checkGitHub()
+  const [licOk, ghOk] = await Promise.all([
+    checkLicenseServer(), checkGitHub()
   ]);
+  const apiOk = licOk;
 
   const allOk = licOk && apiOk && ghOk;
   const someDown = !licOk || !apiOk;

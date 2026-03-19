@@ -1,690 +1,1054 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LibreCDI — Logiciel de gestion de CDI scolaire</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:       #0f0f1a;
-  --surface:  #1e1e2e;
-  --surface2: #24273a;
-  --border:   #313244;
-  --border2:  #45475a;
-  --text:     #cdd6f4;
-  --muted:    #a6adc8;
-  --faint:    #6c7086;
-  --purple:   #cba6f7;
-  --blue:     #89b4fa;
-  --green:    #a6e3a1;
-  --yellow:   #f9e2af;
-  --red:      #f38ba8;
-  --teal:     #94e2d5;
-}
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LibreCDI — Logiciel de gestion de CDI scolaire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1e1e2e;
+      --surface2: #24273a;
+      --border: #313244;
+      --border2: #45475a;
+      --text: #cdd6f4;
+      --muted: #a6adc8;
+      --faint: #6c7086;
+      --purple: #cba6f7;
+      --blue: #89b4fa;
+      --green: #a6e3a1;
+      --yellow: #f9e2af;
+      --red: #f38ba8;
+      --teal: #94e2d5;
+    }
 
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 48px;
-  background: rgba(15,15,26,0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo {
-  font-family: 'Syne', sans-serif;
-  font-size: 20px; font-weight: 800;
-  color: var(--purple);
-  letter-spacing: -0.5px;
-}
-.nav-logo span { color: var(--muted); font-weight: 400; font-size: 13px; margin-left: 8px; }
-.nav-links { display: flex; gap: 32px; }
-.nav-links a {
-  color: var(--muted); text-decoration: none; font-size: 14px;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--text); }
-.nav-cta {
-  display: flex; gap: 10px;
-}
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 9px 20px; border-radius: 8px; font-size: 13px;
-  font-weight: 600; text-decoration: none; cursor: pointer;
-  transition: all 0.2s; border: 1px solid var(--border2);
-  background: var(--surface); color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-}
-.btn:hover { background: var(--border2); }
-.btn-primary {
-  background: var(--purple); color: var(--bg);
-  border-color: var(--purple);
-}
-.btn-primary:hover { background: #b48ead; border-color: #b48ead; }
-.btn-outline-blue {
-  color: var(--blue); border-color: var(--blue); background: transparent;
-}
-.btn-outline-blue:hover { background: var(--blue); color: var(--bg); }
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  padding: 120px 24px 80px;
-  position: relative;
-}
-.hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 40% at 50% 20%, rgba(203,166,247,0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 30% at 20% 70%, rgba(137,180,250,0.05) 0%, transparent 60%);
-  pointer-events: none;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 20px; padding: 6px 16px;
-  font-size: 12px; color: var(--muted); margin-bottom: 32px;
-  animation: fadeUp 0.6s ease both;
-}
-.hero-badge span { color: var(--green); font-weight: 600; }
-.hero h1 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(42px, 7vw, 80px);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -2px;
-  margin-bottom: 24px;
-  animation: fadeUp 0.6s 0.1s ease both;
-}
-.hero h1 em {
-  font-style: normal;
-  background: linear-gradient(135deg, var(--purple), var(--blue));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero p {
-  font-size: 18px; color: var(--muted); max-width: 560px;
-  line-height: 1.7; margin-bottom: 40px;
-  animation: fadeUp 0.6s 0.2s ease both;
-}
-.hero-actions {
-  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-  animation: fadeUp 0.6s 0.3s ease both;
-}
-.hero-scroll {
-  position: absolute; bottom: 32px; left: 50%;
-  transform: translateX(-50%);
-  color: var(--faint); font-size: 12px;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  animation: fadeUp 0.6s 0.5s ease both;
-}
-.scroll-dot {
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, var(--faint), transparent);
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* ── FEATURES ── */
-.section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
-.section-label {
-  font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--purple);
-  margin-bottom: 16px;
-}
-.section-title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 800; letter-spacing: -1px;
-  margin-bottom: 16px;
-}
-.section-sub {
-  font-size: 16px; color: var(--muted); max-width: 560px;
-  line-height: 1.7; margin-bottom: 56px;
-}
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-.feature-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 28px;
-  transition: border-color 0.2s, transform 0.2s;
-  position: relative; overflow: hidden;
-}
-.feature-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent, var(--purple)), transparent);
-  opacity: 0; transition: opacity 0.3s;
-}
-.feature-card:hover { border-color: var(--border2); transform: translateY(-3px); }
-.feature-card:hover::before { opacity: 1; }
-.feature-icon {
-  width: 44px; height: 44px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; margin-bottom: 16px;
-  background: var(--surface2); border: 1px solid var(--border);
-}
-.feature-card h3 {
-  font-family: 'Syne', sans-serif;
-  font-size: 16px; font-weight: 700; margin-bottom: 8px;
-}
-.feature-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(15, 15, 26, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
 
-/* ── SCREENSHOT MOCKUP ── */
-.mockup-section {
-  padding: 80px 48px;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.mockup-inner { max-width: 1200px; margin: 0 auto; }
-.mockup-frame {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.4);
-  margin-top: 48px;
-}
-.mockup-bar {
-  background: var(--surface2);
-  padding: 12px 16px;
-  display: flex; align-items: center; gap: 8px;
-  border-bottom: 1px solid var(--border);
-}
-.mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
-.mockup-content {
-  min-height: 360px; position: relative; overflow: hidden;
-  background: var(--bg);
-}
-.mockup-slides { display: flex; transition: transform 0.4s ease; }
-.mockup-slide { min-width: 100%; position: relative; }
-.mockup-slide img { width: 100%; height: auto; display: block; }
-.mockup-slide-label {
-  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
-  background: rgba(15,15,26,0.85); backdrop-filter: blur(8px);
-  color: var(--muted); font-size: 12px; padding: 4px 14px;
-  border-radius: 20px; border: 1px solid var(--border); white-space: nowrap;
-}
-.mockup-nav {
-  display: flex; justify-content: center; gap: 8px;
-  padding: 14px; background: var(--surface2); border-top: 1px solid var(--border);
-}
-.mockup-nav-btn {
-  padding: 5px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
-  border: 1px solid var(--border2); background: var(--surface);
-  color: var(--muted); cursor: pointer; transition: all 0.2s;
-}
-.mockup-nav-btn.active { background: var(--purple); color: var(--bg); border-color: var(--purple); }
-.mockup-nav-btn:hover:not(.active) { background: var(--border2); }
-.mockup-placeholder {
-  min-height: 360px; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; text-align: center; padding: 32px;
-  background:
-    repeating-linear-gradient(0deg, transparent, transparent 31px, var(--border) 31px, var(--border) 32px),
-    repeating-linear-gradient(90deg, transparent, transparent 31px, var(--border) 31px, var(--border) 32px);
-}
-.mockup-placeholder .icon { font-size: 32px; margin-bottom: 12px; }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--purple);
+      letter-spacing: -0.5px;
+    }
 
-/* ── HOW IT WORKS ── */
-.steps { display: flex; flex-direction: column; gap: 0; }
-.step {
-  display: flex; gap: 32px; align-items: flex-start;
-  padding: 32px 0;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.step:last-child { border-bottom: none; }
-.step-num {
-  font-family: 'Syne', sans-serif;
-  font-size: 48px; font-weight: 800;
-  color: var(--border2); line-height: 1;
-  min-width: 64px; text-align: right;
-}
-.step-body h3 {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px; font-weight: 700; margin-bottom: 8px;
-}
-.step-body p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .nav-logo span {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 13px;
+      margin-left: 8px;
+    }
 
-/* ── PRICING ── */
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px; margin-top: 48px;
-}
-.pricing-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 36px;
-  position: relative;
-}
-.pricing-card.featured {
-  border-color: var(--purple);
-  background: linear-gradient(135deg, var(--surface) 0%, rgba(203,166,247,0.05) 100%);
-}
-.pricing-badge {
-  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-  background: var(--purple); color: var(--bg);
-  font-size: 11px; font-weight: 700; padding: 4px 14px;
-  border-radius: 20px; white-space: nowrap;
-}
-.pricing-name {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px; font-weight: 700; margin-bottom: 8px;
-}
-.pricing-price {
-  font-family: 'Syne', sans-serif;
-  font-size: 42px; font-weight: 800; margin-bottom: 4px;
-  color: var(--purple);
-}
-.pricing-price span { font-size: 16px; color: var(--muted); font-weight: 400; }
-.pricing-desc { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
-.pricing-features { list-style: none; margin-bottom: 32px; }
-.pricing-features li {
-  font-size: 14px; padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 10px;
-  color: var(--muted);
-}
-.pricing-features li:last-child { border: none; }
-.pricing-features li::before {
-  content: '✓'; color: var(--green); font-weight: 700; font-size: 13px;
-}
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
 
-/* ── CONTACT ── */
-.contact-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-  align-items: start;
-}
-.contact-form { display: flex; flex-direction: column; gap: 16px; }
-.form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-label { font-size: 12px; font-weight: 600; color: var(--muted); }
-.form-input {
-  background: var(--surface); border: 1px solid var(--border2);
-  border-radius: 8px; padding: 10px 14px;
-  color: var(--text); font-size: 14px;
-  font-family: 'DM Sans', sans-serif;
-  transition: border-color 0.2s;
-}
-.form-input:focus { outline: none; border-color: var(--purple); }
-textarea.form-input { resize: vertical; min-height: 120px; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
 
-/* ── FOOTER ── */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 40px 48px;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 16px;
-  color: var(--faint); font-size: 13px;
-}
-footer a { color: var(--faint); text-decoration: none; transition: color 0.2s; }
-footer a:hover { color: var(--muted); }
-.footer-links { display: flex; gap: 24px; }
+    .nav-links a:hover {
+      color: var(--text);
+    }
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.reveal {
-  opacity: 0; transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
+    .nav-cta {
+      display: flex;
+      gap: 10px;
+    }
 
-@media (max-width: 768px) {
-  nav { padding: 14px 20px; }
-  .nav-links { display: none; }
-  .section { padding: 64px 20px; }
-  .contact-grid { grid-template-columns: 1fr; }
-  footer { flex-direction: column; text-align: center; }
-}
-</style>
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn:hover {
+      background: var(--border2);
+    }
+
+    .btn-primary {
+      background: var(--purple);
+      color: var(--bg);
+      border-color: var(--purple);
+    }
+
+    .btn-primary:hover {
+      background: #b48ead;
+      border-color: #b48ead;
+    }
+
+    .btn-outline-blue {
+      color: var(--blue);
+      border-color: var(--blue);
+      background: transparent;
+    }
+
+    .btn-outline-blue:hover {
+      background: var(--blue);
+      color: var(--bg);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 20%, rgba(203, 166, 247, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 20% 70%, rgba(137, 180, 250, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge span {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(42px, 7vw, 80px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--faint);
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: fadeUp 0.6s 0.5s ease both;
+    }
+
+    .scroll-dot {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--faint), transparent);
+    }
+
+    /* ── FEATURES ── */
+    .section {
+      padding: 100px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 56px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent, var(--purple)), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-3px);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+    }
+
+    .feature-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── SCREENSHOT MOCKUP ── */
+    .mockup-section {
+      padding: 80px 48px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mockup-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .mockup-frame {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
+      margin-top: 48px;
+    }
+
+    .mockup-bar {
+      background: var(--surface2);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mockup-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .mockup-content {
+      min-height: 360px;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .mockup-slides {
+      display: flex;
+      transition: transform 0.4s ease;
+    }
+
+    .mockup-slide {
+      min-width: 100%;
+      position: relative;
+    }
+
+    .mockup-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .mockup-slide-label {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 15, 26, 0.85);
+      backdrop-filter: blur(8px);
+      color: var(--muted);
+      font-size: 12px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .mockup-nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px;
+      background: var(--surface2);
+      border-top: 1px solid var(--border);
+    }
+
+    .mockup-nav-btn {
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mockup-nav-btn.active {
+      background: var(--purple);
+      color: var(--bg);
+      border-color: var(--purple);
+    }
+
+    .mockup-nav-btn:hover:not(.active) {
+      background: var(--border2);
+    }
+
+    .mockup-placeholder {
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 32px;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 31px, var(--border) 31px, var(--border) 32px),
+        repeating-linear-gradient(90deg, transparent, transparent 31px, var(--border) 31px, var(--border) 32px);
+    }
+
+    .mockup-placeholder .icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .step:last-child {
+      border-bottom: none;
+    }
+
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--border2);
+      line-height: 1;
+      min-width: 64px;
+      text-align: right;
+    }
+
+    .step-body h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step-body p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--purple);
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(203, 166, 247, 0.05) 100%);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--purple);
+      color: var(--bg);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .pricing-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .pricing-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: var(--purple);
+    }
+
+    .pricing-price span {
+      font-size: 16px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .pricing-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .pricing-features li {
+      font-size: 14px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .pricing-features li:last-child {
+      border: none;
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .form-input {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--purple);
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--faint);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--faint);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 14px 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .section {
+        padding: 64px 20px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">LibreCDI <span>v3</span></div>
-  <div class="nav-links">
-    <a href="#fonctionnalites">Fonctionnalités</a>
-    <a href="docs.html">Documentation</a>
-    <a href="faq.html">FAQ</a>
-    <a href="#tarifs">Tarifs</a>
-    <a href="#contact">Contact</a>
-  </div>
-  <div class="nav-cta">
-    <a href="status.html" class="btn">Status</a>
-    <a href="report.html" class="btn">Support</a>
-    <a href="#tarifs" class="btn btn-primary">Obtenir une licence</a>
-  </div>
-</nav>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">LibreCDI <span>v3</span></div>
+    <div class="nav-links">
+      <a href="#fonctionnalites">Fonctionnalités</a>
+      <a href="docs.html">Documentation</a>
+      <a href="faq.html">FAQ</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="status.html" class="btn">Status</a>
+      <a href="report.html" class="btn">Support</a>
+      <a href="#tarifs" class="btn btn-primary">Obtenir une licence</a>
+    </div>
+  </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-badge">
-    <span>●</span> Logiciel français pour documentalistes scolaires
-  </div>
-  <h1>Gérez votre CDI<br>sans <em>prise de tête</em></h1>
-  <p>LibreCDI est un logiciel de gestion de bibliothèque scolaire simple, rapide et pensé pour les professeurs documentalistes.</p>
-  <div class="hero-actions">
-    <a href="#tarifs" class="btn btn-primary">Obtenir une licence — dès 50 €/an</a>
-    <a href="#fonctionnement" class="btn btn-outline-blue">Voir comment ça marche</a>
-  </div>
-  <div class="hero-scroll">
-    <div class="scroll-dot"></div>
-    Découvrir
-  </div>
-</section>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span>●</span> Logiciel français pour documentalistes scolaires
+    </div>
+    <h1>Gérez votre CDI<br>sans <em>prise de tête</em></h1>
+    <p>LibreCDI est un logiciel de gestion de bibliothèque scolaire simple, rapide et pensé pour les professeurs
+      documentalistes.</p>
+    <div class="hero-actions">
+      <a href="#tarifs" class="btn btn-primary">Obtenir une licence — dès 50 €/an</a>
+      <a href="#fonctionnement" class="btn btn-outline-blue">Voir comment ça marche</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-dot"></div>
+      Découvrir
+    </div>
+  </section>
 
-<!-- MOCKUP -->
-<div class="mockup-section">
-  <div class="mockup-inner">
-    <div class="section-label">Interface</div>
-    <div class="section-title">Conçu pour être utilisé<br>au quotidien</div>
-    <div class="mockup-frame">
-      <div class="mockup-bar">
-        <div class="mockup-dot" style="background:#f38ba8"></div>
-        <div class="mockup-dot" style="background:#f9e2af"></div>
-        <div class="mockup-dot" style="background:#a6e3a1"></div>
-        <div style="flex:1;background:#181825;border-radius:4px;height:22px;margin-left:8px;display:flex;align-items:center;padding:0 12px">
-          <span style="color:#6c7086;font-size:11px">https://localhost:8443</span>
-        </div>
-      </div>
-      <div class="mockup-content" id="mockupArea">
-        <div class="mockup-slides" id="mockupSlides">
-          <div class="mockup-slide">
-            <img src="screenshots/screenshot-dashboard.png" alt="Tableau de bord LibreCDI"
-                 onerror="this.closest('.mockup-slide').querySelector('.mockup-slide-label').textContent='';this.style.display='none';this.closest('.mockup-slide').style.minHeight='360px';this.closest('.mockup-slide').style.display='flex';this.closest('.mockup-slide').style.alignItems='center';this.closest('.mockup-slide').style.justifyContent='center'">
-            <div class="mockup-slide-label">Tableau de bord</div>
-          </div>
-          <div class="mockup-slide">
-            <img src="screenshots/screenshot-books.png" alt="Catalogue de livres">
-            <div class="mockup-slide-label">Catalogue de livres</div>
-          </div>
-          <div class="mockup-slide">
-            <img src="screenshots/screenshot-loans.png" alt="Gestion des emprunts">
-            <div class="mockup-slide-label">Emprunts</div>
-          </div>
-          <div class="mockup-slide">
-            <img src="screenshots/screenshot-students.png" alt="Gestion des élèves">
-            <div class="mockup-slide-label">Élèves</div>
+  <!-- MOCKUP -->
+  <div class="mockup-section">
+    <div class="mockup-inner">
+      <div class="section-label">Interface</div>
+      <div class="section-title">Conçu pour être utilisé<br>au quotidien</div>
+      <div class="mockup-frame">
+        <div class="mockup-bar">
+          <div class="mockup-dot" style="background:#f38ba8"></div>
+          <div class="mockup-dot" style="background:#f9e2af"></div>
+          <div class="mockup-dot" style="background:#a6e3a1"></div>
+          <div
+            style="flex:1;background:#181825;border-radius:4px;height:22px;margin-left:8px;display:flex;align-items:center;padding:0 12px">
+            <span style="color:#6c7086;font-size:11px">https://localhost:8443</span>
           </div>
         </div>
-      </div>
-      <div class="mockup-nav">
-        <button class="mockup-nav-btn active" onclick="goSlide(0)">Tableau de bord</button>
-        <button class="mockup-nav-btn" onclick="goSlide(1)">Livres</button>
-        <button class="mockup-nav-btn" onclick="goSlide(2)">Emprunts</button>
-        <button class="mockup-nav-btn" onclick="goSlide(3)">Élèves</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- FEATURES -->
-<section class="section" id="fonctionnalites">
-  <div class="section-label reveal">Fonctionnalités</div>
-  <div class="section-title reveal">Tout ce qu'il faut,<br>rien de superflu</div>
-  <div class="section-sub reveal">LibreCDI couvre l'ensemble du cycle de vie d'une bibliothèque scolaire — des livres aux élèves, en passant par les emprunts et les retards.</div>
-
-  <div class="features-grid">
-    <div class="feature-card reveal" style="--accent:var(--purple)">
-      <div class="feature-icon">📚</div>
-      <h3>Catalogue de livres</h3>
-      <p>Ajout rapide par scan ISBN, couvertures automatiques via OpenLibrary, genres, cotes et statuts.</p>
-    </div>
-    <div class="feature-card reveal" style="--accent:var(--blue)">
-      <div class="feature-icon">👩‍🎓</div>
-      <h3>Gestion des élèves</h3>
-      <p>Fiches élèves, classes, historique complet des emprunts, incidents et blocages.</p>
-    </div>
-    <div class="feature-card reveal" style="--accent:var(--green)">
-      <div class="feature-icon">🔄</div>
-      <h3>Emprunts & retours</h3>
-      <p>Scan douchette ou caméra, retour en un clic, mode rafale pour les sorties de classe.</p>
-    </div>
-    <div class="feature-card reveal" style="--accent:var(--yellow)">
-      <div class="feature-icon">⚠️</div>
-      <h3>Suivi des retards</h3>
-      <p>Liste des emprunts en retard, impression PDF, alertes automatiques.</p>
-    </div>
-    <div class="feature-card reveal" style="--accent:var(--teal)">
-      <div class="feature-icon">📊</div>
-      <h3>Tableau de bord</h3>
-      <p>KPIs en temps réel, graphiques d'activité, vue d'ensemble du CDI en un coup d'œil.</p>
-    </div>
-    <div class="feature-card reveal" style="--accent:var(--red)">
-      <div class="feature-icon">🔒</div>
-      <h3>Sauvegarde automatique</h3>
-      <p>Backup quotidien sur GitHub, restauration en un clic, 7 dernières sauvegardes conservées.</p>
-    </div>
-    <div class="feature-card reveal" style="--accent:var(--purple)">
-      <div class="feature-icon">🏷️</div>
-      <h3>Codes-barres</h3>
-      <p>Génération et impression de codes-barres CDI pour tous vos ouvrages.</p>
-    </div>
-    <div class="feature-card reveal" style="--accent:var(--blue)">
-      <div class="feature-icon">🔄</div>
-      <h3>Mises à jour auto</h3>
-      <p>Le logiciel se met à jour automatiquement sans réinstallation ni intervention technique.</p>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section" id="fonctionnement" style="border-top:1px solid var(--border)">
-  <div class="section-label reveal">Comment ça marche</div>
-  <div class="section-title reveal">Opérationnel en<br>quelques minutes</div>
-  <div class="section-sub reveal">Pas besoin d'un technicien. L'installation est guidée pas à pas.</div>
-
-  <div class="steps reveal">
-    <div class="step">
-      <div class="step-num">01</div>
-      <div class="step-body">
-        <h3>Vous achetez une licence</h3>
-        <p>Paiement sécurisé via Gumroad. Votre clé de licence est envoyée par email immédiatement après l'achat.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <div class="step-body">
-        <h3>Vous installez LibreCDI</h3>
-        <p>Téléchargez l'installeur Windows (.exe). L'assistant d'installation configure automatiquement PostgreSQL, Python et le logiciel.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <div class="step-body">
-        <h3>Vous activez votre licence</h3>
-        <p>Au premier lancement, saisissez votre clé. Le logiciel est activé en quelques secondes.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">04</div>
-      <div class="step-body">
-        <h3>Vous gérez votre CDI</h3>
-        <p>Accédez à l'interface depuis n'importe quel navigateur sur votre réseau. Ajoutez vos livres, vos élèves, et commencez à gérer vos emprunts.</p>
+        <div class="mockup-content" id="mockupArea">
+          <div class="mockup-slides" id="mockupSlides">
+            <div class="mockup-slide">
+              <img src="screenshots/screenshot-dashboard.png" alt="Tableau de bord LibreCDI"
+                onerror="this.closest('.mockup-slide').querySelector('.mockup-slide-label').textContent='';this.style.display='none';this.closest('.mockup-slide').style.minHeight='360px';this.closest('.mockup-slide').style.display='flex';this.closest('.mockup-slide').style.alignItems='center';this.closest('.mockup-slide').style.justifyContent='center'">
+              <div class="mockup-slide-label">Tableau de bord</div>
+            </div>
+            <div class="mockup-slide">
+              <img src="screenshots/screenshot-books.png" alt="Catalogue de livres">
+              <div class="mockup-slide-label">Catalogue de livres</div>
+            </div>
+            <div class="mockup-slide">
+              <img src="screenshots/screenshot-loans.png" alt="Gestion des emprunts">
+              <div class="mockup-slide-label">Emprunts</div>
+            </div>
+            <div class="mockup-slide">
+              <img src="screenshots/screenshot-students.png" alt="Gestion des élèves">
+              <div class="mockup-slide-label">Élèves</div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-nav">
+          <button class="mockup-nav-btn active" onclick="goSlide(0)">Tableau de bord</button>
+          <button class="mockup-nav-btn" onclick="goSlide(1)">Livres</button>
+          <button class="mockup-nav-btn" onclick="goSlide(2)">Emprunts</button>
+          <button class="mockup-nav-btn" onclick="goSlide(3)">Élèves</button>
+        </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- PRICING -->
-<section class="section" id="tarifs" style="border-top:1px solid var(--border)">
-  <div class="section-label reveal">Tarifs</div>
-  <div class="section-title reveal">Simple et transparent</div>
-  <div class="section-sub reveal">Une licence par établissement, valable 1 an, renouvelable.</div>
+  <!-- FEATURES -->
+  <section class="section" id="fonctionnalites">
+    <div class="section-label reveal">Fonctionnalités</div>
+    <div class="section-title reveal">Tout ce qu'il faut,<br>rien de superflu</div>
+    <div class="section-sub reveal">LibreCDI couvre l'ensemble du cycle de vie d'une bibliothèque scolaire — des livres
+      aux élèves, en passant par les emprunts et les retards.</div>
 
-  <div class="pricing-grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));max-width:800px;margin:0 auto">
-    <div class="pricing-card featured">
-      <div class="pricing-badge">Licence standard</div>
-      <div class="pricing-name">Licence annuelle</div>
-      <div class="pricing-price">50 € <span>/ an</span></div>
-      <div class="pricing-desc">Pour un CDI — 1 établissement</div>
-      <ul class="pricing-features">
-        <li>Toutes les fonctionnalités incluses</li>
-        <li>Mises à jour automatiques pendant 1 an</li>
-        <li>Accessible depuis tout le réseau de l'établissement</li>
-        <li>Sauvegarde automatique GitHub</li>
-        <li>Support par email sous 24h</li>
-        <li>Résiliable à tout moment</li>
-      </ul>
-      <a href="https://gumroad.com" target="_blank" class="btn btn-primary" style="width:100%;justify-content:center">
-        Acheter — 50 € / an
-      </a>
+    <div class="features-grid">
+      <div class="feature-card reveal" style="--accent:var(--purple)">
+        <div class="feature-icon">📚</div>
+        <h3>Catalogue de livres</h3>
+        <p>Ajout rapide par scan ISBN, couvertures automatiques via OpenLibrary, genres, cotes et statuts.</p>
+      </div>
+      <div class="feature-card reveal" style="--accent:var(--blue)">
+        <div class="feature-icon">👩‍🎓</div>
+        <h3>Gestion des élèves</h3>
+        <p>Fiches élèves, classes, historique complet des emprunts, incidents et blocages.</p>
+      </div>
+      <div class="feature-card reveal" style="--accent:var(--green)">
+        <div class="feature-icon">🔄</div>
+        <h3>Emprunts & retours</h3>
+        <p>Scan douchette ou caméra, retour en un clic, mode rafale pour les sorties de classe.</p>
+      </div>
+      <div class="feature-card reveal" style="--accent:var(--yellow)">
+        <div class="feature-icon">⚠️</div>
+        <h3>Suivi des retards</h3>
+        <p>Liste des emprunts en retard, impression PDF, alertes automatiques.</p>
+      </div>
+      <div class="feature-card reveal" style="--accent:var(--teal)">
+        <div class="feature-icon">📊</div>
+        <h3>Tableau de bord</h3>
+        <p>KPIs en temps réel, graphiques d'activité, vue d'ensemble du CDI en un coup d'œil.</p>
+      </div>
+      <div class="feature-card reveal" style="--accent:var(--red)">
+        <div class="feature-icon">🔒</div>
+        <h3>Sauvegarde automatique</h3>
+        <p>Backup quotidien sur GitHub, restauration en un clic, 7 dernières sauvegardes conservées.</p>
+      </div>
+      <div class="feature-card reveal" style="--accent:var(--purple)">
+        <div class="feature-icon">🏷️</div>
+        <h3>Codes-barres</h3>
+        <p>Génération et impression de codes-barres CDI pour tous vos ouvrages.</p>
+      </div>
+      <div class="feature-card reveal" style="--accent:var(--blue)">
+        <div class="feature-icon">🔄</div>
+        <h3>Mises à jour auto</h3>
+        <p>Le logiciel se met à jour automatiquement sans réinstallation ni intervention technique.</p>
+      </div>
     </div>
-    <div class="pricing-card">
-      <div class="pricing-name">Devis établissement</div>
-      <div class="pricing-price" style="font-size:28px;padding-top:8px">Sur devis</div>
-      <div class="pricing-desc">Réseau d'établissements, déploiement multiple</div>
-      <ul class="pricing-features">
-        <li>Toutes les fonctionnalités incluses</li>
-        <li>Plusieurs établissements</li>
-        <li>Installation et configuration à distance</li>
-        <li>Support dédié et prioritaire</li>
-        <li>Facturation établissement ou collectivité</li>
-      </ul>
-      <a href="#contact" class="btn" style="width:100%;justify-content:center">
-        Nous contacter
-      </a>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="fonctionnement" style="border-top:1px solid var(--border)">
+    <div class="section-label reveal">Comment ça marche</div>
+    <div class="section-title reveal">Opérationnel en<br>quelques minutes</div>
+    <div class="section-sub reveal">Pas besoin d'un technicien. L'installation est guidée pas à pas.</div>
+
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Vous achetez une licence</h3>
+          <p>Paiement sécurisé via Gumroad. Votre clé de licence est envoyée par email immédiatement après l'achat.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>Vous installez LibreCDI</h3>
+          <p>Téléchargez l'installeur Windows (.exe). L'assistant d'installation configure automatiquement PostgreSQL,
+            Python et le logiciel.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Vous activez votre licence</h3>
+          <p>Au premier lancement, saisissez votre clé. Le logiciel est activé en quelques secondes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>Vous gérez votre CDI</h3>
+          <p>Accédez à l'interface depuis n'importe quel navigateur sur votre réseau. Ajoutez vos livres, vos élèves, et
+            commencez à gérer vos emprunts.</p>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CONTACT -->
-<section class="section" id="contact" style="border-top:1px solid var(--border)">
-  <div class="section-label reveal">Contact</div>
-  <div class="section-title reveal">Une question ?</div>
+  <!-- PRICING -->
+  <section class="section" id="tarifs" style="border-top:1px solid var(--border)">
+    <div class="section-label reveal">Tarifs</div>
+    <div class="section-title reveal">Simple et transparent</div>
+    <div class="section-sub reveal">Une licence par établissement, valable 1 an, renouvelable.</div>
 
-  <div class="contact-grid reveal">
+    <div class="pricing-grid reveal"
+      style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));max-width:800px;margin:0 auto">
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Licence standard</div>
+        <div class="pricing-name">Licence annuelle</div>
+        <div class="pricing-price">50 € <span>/ an</span></div>
+        <div class="pricing-desc">Pour un CDI — 1 établissement</div>
+        <ul class="pricing-features">
+          <li>Toutes les fonctionnalités incluses</li>
+          <li>Mises à jour automatiques pendant 1 an</li>
+          <li>Accessible depuis tout le réseau de l'établissement</li>
+          <li>Sauvegarde automatique GitHub</li>
+          <li>Support par email sous 24h</li>
+          <li>Résiliable à tout moment</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_6oU3cveZTaxd0AR8MG0Ba00" target="_blank" class="btn btn-primary"
+          style="width:100%;justify-content:center">
+          Acheter — 50 € / an
+        </a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Devis établissement</div>
+        <div class="pricing-price" style="font-size:28px;padding-top:8px">Sur devis</div>
+        <div class="pricing-desc">Réseau d'établissements, déploiement multiple</div>
+        <ul class="pricing-features">
+          <li>Toutes les fonctionnalités incluses</li>
+          <li>Plusieurs établissements</li>
+          <li>Installation et configuration à distance</li>
+          <li>Support dédié et prioritaire</li>
+          <li>Facturation établissement ou collectivité</li>
+        </ul>
+        <a href="#contact" class="btn" style="width:100%;justify-content:center">
+          Nous contacter
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact" style="border-top:1px solid var(--border)">
+    <div class="section-label reveal">Contact</div>
+    <div class="section-title reveal">Une question ?</div>
+
+    <div class="contact-grid reveal">
+      <div>
+        <p style="color:var(--muted);line-height:1.8;margin-bottom:32px;font-size:15px">
+          Vous souhaitez un devis, une démonstration, ou vous avez besoin d'aide avant d'acheter ? Écrivez-nous, nous
+          répondons sous 24h.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div>
+            <div
+              style="font-size:12px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">
+              Email</div>
+            <div style="color:var(--blue)">mathieu.gaillardin@gmail.com</div>
+          </div>
+          <div>
+            <div
+              style="font-size:12px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">
+              Support technique</div>
+            <a href="report.html" style="color:var(--purple);text-decoration:none">Signaler un problème →</a>
+          </div>
+          <div>
+            <div
+              style="font-size:12px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">
+              Statut des services</div>
+            <a href="status.html" style="color:var(--green);text-decoration:none">Voir le status →</a>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" onsubmit="submitContact(event)">
+        <div class="form-group">
+          <label class="form-label">Nom *</label>
+          <input class="form-input" type="text" name="name" required placeholder="Marie Dupont">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input class="form-input" type="email" name="email" required placeholder="marie@college.fr">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Etablissement</label>
+          <input class="form-input" type="text" name="establishment" placeholder="College Jean Moulin">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message *</label>
+          <textarea class="form-input" name="message" required placeholder="Votre message..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="contactBtn">Envoyer le message</button>
+        <div id="contactMsg" style="display:none;font-size:13px;margin-top:8px"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
     <div>
-      <p style="color:var(--muted);line-height:1.8;margin-bottom:32px;font-size:15px">
-        Vous souhaitez un devis, une démonstration, ou vous avez besoin d'aide avant d'acheter ? Écrivez-nous, nous répondons sous 24h.
-      </p>
-      <div style="display:flex;flex-direction:column;gap:20px">
-        <div>
-          <div style="font-size:12px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Email</div>
-          <div style="color:var(--blue)">mathieu.gaillardin@gmail.com</div>
-        </div>
-        <div>
-          <div style="font-size:12px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Support technique</div>
-          <a href="report.html" style="color:var(--purple);text-decoration:none">Signaler un problème →</a>
-        </div>
-        <div>
-          <div style="font-size:12px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">Statut des services</div>
-          <a href="status.html" style="color:var(--green);text-decoration:none">Voir le status →</a>
-        </div>
-      </div>
+      <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--purple)">LibreCDI</span>
+      <span style="margin-left:16px">© 2026 — Logiciel de gestion de CDI scolaire</span>
     </div>
+    <div class="footer-links">
+      <a href="docs.html">Documentation</a>
+      <a href="faq.html">FAQ</a>
+      <a href="status.html">Status</a>
+      <a href="report.html">Support</a>
+      <a href="#tarifs">Tarifs</a>
+    </div>
+  </footer>
 
-    <form class="contact-form" id="contactForm" onsubmit="submitContact(event)">
-      <div class="form-group">
-        <label class="form-label">Nom *</label>
-        <input class="form-input" type="text" name="name" required placeholder="Marie Dupont">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email *</label>
-        <input class="form-input" type="email" name="email" required placeholder="marie@college.fr">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Etablissement</label>
-        <input class="form-input" type="text" name="establishment" placeholder="College Jean Moulin">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Message *</label>
-        <textarea class="form-input" name="message" required placeholder="Votre message..."></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary" id="contactBtn">Envoyer le message</button>
-      <div id="contactMsg" style="display:none;font-size:13px;margin-top:8px"></div>
-    </form>
-  </div>
-</section>
+  <script>
+    // Reveal on scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-<!-- FOOTER -->
-<footer>
-  <div>
-    <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--purple)">LibreCDI</span>
-    <span style="margin-left:16px">© 2026 — Logiciel de gestion de CDI scolaire</span>
-  </div>
-  <div class="footer-links">
-    <a href="docs.html">Documentation</a>
-    <a href="faq.html">FAQ</a>
-    <a href="status.html">Status</a>
-    <a href="report.html">Support</a>
-    <a href="#tarifs">Tarifs</a>
-  </div>
-</footer>
-
-<script>
-// Reveal on scroll
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Carousel screenshots
-let currentSlide = 0;
-function goSlide(n) {
-  currentSlide = n;
-  const slides = document.getElementById('mockupSlides');
-  if (slides) slides.style.transform = 'translateX(-' + (n * 100) + '%)';
-  document.querySelectorAll('.mockup-nav-btn').forEach((b, i) => b.classList.toggle('active', i === n));
-}
-setInterval(() => goSlide((currentSlide + 1) % 4), 4000);
-
-// Contact form — Formspree
-async function submitContact(e) {
-  e.preventDefault();
-  const btn = document.getElementById('contactBtn');
-  const msg = document.getElementById('contactMsg');
-  btn.disabled = true;
-  btn.textContent = 'Envoi en cours...';
-  const data = new FormData(e.target);
-  try {
-    const r = await fetch('https://formspree.io/f/xyknlwln', {
-      method: 'POST', body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-    if (r.ok) {
-      msg.style.display = 'block';
-      msg.style.color = 'var(--green)';
-      msg.textContent = 'Message envoye ! Nous vous repondrons sous 24h.';
-      e.target.reset();
-    } else {
-      throw new Error('Erreur serveur');
+    // Carousel screenshots
+    let currentSlide = 0;
+    function goSlide(n) {
+      currentSlide = n;
+      const slides = document.getElementById('mockupSlides');
+      if (slides) slides.style.transform = 'translateX(-' + (n * 100) + '%)';
+      document.querySelectorAll('.mockup-nav-btn').forEach((b, i) => b.classList.toggle('active', i === n));
     }
-  } catch(err) {
-    msg.style.display = 'block';
-    msg.style.color = 'var(--red)';
-    msg.textContent = "Erreur lors de l'envoi. Reessayez ou ecrivez a mathieu.gaillardin@gmail.com";
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Envoyer le message';
-  }
-}
-</script>
+    setInterval(() => goSlide((currentSlide + 1) % 4), 4000);
+
+    // Contact form — Formspree
+    async function submitContact(e) {
+      e.preventDefault();
+      const btn = document.getElementById('contactBtn');
+      const msg = document.getElementById('contactMsg');
+      btn.disabled = true;
+      btn.textContent = 'Envoi en cours...';
+      const data = new FormData(e.target);
+      try {
+        const r = await fetch('https://formspree.io/f/xyknlwln', {
+          method: 'POST', body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (r.ok) {
+          msg.style.display = 'block';
+          msg.style.color = 'var(--green)';
+          msg.textContent = 'Message envoye ! Nous vous repondrons sous 24h.';
+          e.target.reset();
+        } else {
+          throw new Error('Erreur serveur');
+        }
+      } catch (err) {
+        msg.style.display = 'block';
+        msg.style.color = 'var(--red)';
+        msg.textContent = "Erreur lors de l'envoi. Reessayez ou ecrivez a mathieu.gaillardin@gmail.com";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Envoyer le message';
+      }
+    }
+  </script>
 </body>
+
 </html>

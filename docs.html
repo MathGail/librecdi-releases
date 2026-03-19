@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LibreCDI — Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0f1a;--surface:#1e1e2e;--surface2:#24273a;--border:#313244;--border2:#45475a;
+  --text:#cdd6f4;--muted:#a6adc8;--faint:#6c7086;--purple:#cba6f7;--blue:#89b4fa;
+  --green:#a6e3a1;--yellow:#f9e2af;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;
+  border-bottom:1px solid var(--border);background:rgba(15,15,26,0.95);
+  backdrop-filter:blur(12px);z-index:100;flex-shrink:0;}
+.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--purple);text-decoration:none;}
+.nav-logo span{color:var(--muted);font-weight:400;font-size:13px;margin-left:8px;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;
+  font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;
+  border:1px solid var(--border2);background:var(--surface);color:var(--text);
+  font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn:hover{background:var(--border2);}
+.btn-primary{background:var(--purple);color:#1e1e2e;border-color:var(--purple);}
+.btn-primary:hover{background:#b48ead;}
+.layout{display:grid;grid-template-columns:270px 1fr;flex:1;overflow:hidden;}
+.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:24px 14px;overflow-y:auto;}
+.sidebar-label{font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--faint);
+  text-transform:uppercase;padding:0 10px;margin-bottom:10px;}
+.mod-btn{display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;
+  border-radius:10px;border:none;background:transparent;color:var(--muted);
+  cursor:pointer;text-align:left;transition:all 0.15s;font-family:'DM Sans',sans-serif;font-size:13px;}
+.mod-btn:hover{background:var(--surface2);color:var(--text);}
+.mod-btn.active{background:var(--surface2);color:var(--purple);font-weight:600;
+  border-left:3px solid var(--purple);padding-left:9px;}
+.mod-num{width:24px;height:24px;border-radius:6px;background:var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:10px;
+  font-weight:700;color:var(--faint);flex-shrink:0;}
+.mod-btn.active .mod-num{background:var(--purple);color:#1e1e2e;}
+.main{display:flex;flex-direction:column;overflow:hidden;}
+.doc-header{padding:28px 36px 20px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.doc-header h1{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px;letter-spacing:-0.3px;}
+.doc-header p{color:var(--faint);font-size:13px;}
+.doc-actions{display:flex;gap:10px;margin-top:14px;}
+.pdf-frame{flex:1;border:none;background:var(--bg);width:100%;min-height:0;}
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;padding:64px;text-align:center;}
+.empty-icon{font-size:48px;opacity:0.35;}
+.empty h2{font-family:'Syne',sans-serif;font-size:20px;color:var(--muted);}
+.empty p{color:var(--faint);font-size:14px;max-width:400px;line-height:1.6;}
+footer{border-top:1px solid var(--border);padding:20px 48px;
+  display:flex;justify-content:space-between;color:var(--faint);font-size:12px;flex-shrink:0;}
+footer a{color:var(--faint);text-decoration:none;}
+footer a:hover{color:var(--muted);}
+@media(max-width:768px){.layout{grid-template-columns:1fr;}.sidebar{display:none;}nav{padding:14px 20px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">LibreCDI <span>Documentation</span></a>
+  <div style="display:flex;gap:10px">
+    <a href="faq.html" class="btn">FAQ</a>
+    <a href="index.html" class="btn">← Accueil</a>
+  </div>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-label">Modules</div>
+    <div id="moduleList"></div>
+  </aside>
+
+  <main class="main" id="mainArea">
+    <div class="empty">
+      <div class="empty-icon">📖</div>
+      <h2>Bienvenue dans la documentation</h2>
+      <p>Selectionnez un module dans la liste a gauche pour commencer la lecture.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <span>LibreCDI v3 — Documentation officielle</span>
+  <div style="display:flex;gap:20px">
+    <a href="index.html">Accueil</a>
+    <a href="faq.html">FAQ</a>
+    <a href="report.html">Support</a>
+  </div>
+</footer>
+
+<script>
+// ── Liste des modules ─────────────────────────────────────────────
+// Pour ajouter un module : ajoutez le PDF dans docs/ et une entree ici.
+// Aucun autre changement de code necessaire.
+const MODULES = [
+  { num:1, file:"docs/01-installation-configuration.pdf",
+    title:"Installation et Configuration",
+    desc:"Installer LibreCDI, activer votre licence et configurer le logiciel." },
+  { num:2, file:"docs/02-gestion-livres-isbn.pdf",
+    title:"Gestion des Livres",
+    desc:"Ajouter des livres par ISBN, gerer le catalogue et les codes-barres." },
+  { num:3, file:"docs/03-gestion-eleves.pdf",
+    title:"Gestion des Eleves",
+    desc:"Creer les fiches eleves, gerer les classes et les incidents." },
+  { num:4, file:"docs/04-emprunts-retours.pdf",
+    title:"Emprunts et Retours",
+    desc:"Enregistrer les emprunts, retours et suivre les retards." },
+  { num:5, file:"docs/05-sauvegardes-restauration.pdf",
+    title:"Sauvegardes et Restauration",
+    desc:"Configurer GitHub, sauvegarder et restaurer vos donnees." },
+  { num:6, file:"docs/06-mises-a-jour-maintenance.pdf",
+    title:"Mises a jour et Maintenance",
+    desc:"Mettre a jour LibreCDI et effectuer la maintenance courante." },
+];
+
+function buildSidebar() {
+  document.getElementById("moduleList").innerHTML = MODULES.map((m, i) => `
+    <button class="mod-btn" id="btn-${i}" onclick="openModule(${i})">
+      <div class="mod-num">${m.num}</div>
+      <span>${m.title}</span>
+    </button>`).join("");
+}
+
+function openModule(idx) {
+  const m = MODULES[idx];
+  document.querySelectorAll(".mod-btn").forEach((b,i) => b.classList.toggle("active", i===idx));
+  document.getElementById("mainArea").innerHTML = `
+    <div class="doc-header">
+      <div style="margin-bottom:8px">
+        <span style="background:var(--surface2);border:1px solid var(--border2);color:var(--faint);
+          font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.06em">
+          MODULE ${m.num}
+        </span>
+      </div>
+      <h1>${m.title}</h1>
+      <p>${m.desc}</p>
+      <div class="doc-actions">
+        <a href="${m.file}" download class="btn btn-primary">Telecharger le PDF</a>
+        <button class="btn" onclick="document.getElementById('pf').requestFullscreen()">Plein ecran</button>
+      </div>
+    </div>
+    <iframe id="pf" class="pdf-frame" src="${m.file}#toolbar=1&navpanes=0" title="${m.title}"></iframe>`;
+  history.replaceState(null, "", "#" + m.num);
+}
+
+buildSidebar();
+const hash = parseInt(location.hash.replace("#","")) - 1;
+if (hash >= 0 && hash < MODULES.length) openModule(hash);
+</script>
+</body>
+</html>

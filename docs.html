@@ -87,16 +87,40 @@ footer a:hover{color:var(--muted);}
   footer{flex-direction:column;gap:10px;text-align:center;padding:18px 16px;}
   footer>div{justify-content:center;gap:14px;}
 }
+
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted,#a6adc8);border-radius:2px;transition:all .3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-nav{display:none;position:fixed;top:57px;left:0;right:0;background:rgba(15,15,26,.98);
+  backdrop-filter:blur(16px);border-bottom:1px solid var(--border,#313244);z-index:99;
+  padding:16px;flex-direction:column;gap:4px;}
+.mobile-nav.open{display:flex;}
+.mobile-nav a{padding:12px 16px;color:var(--muted,#a6adc8);text-decoration:none;font-size:14px;border-radius:10px;}
+.mobile-nav a:hover{background:var(--surface,#1e1e2e);color:var(--text,#cdd6f4);}
+@media(max-width:768px){.hamburger{display:flex;}.nav-btns{display:none;}}
 </style>
 </head>
 <body>
+<!-- 🔧 CONFIG -->
+<script>const RENDER_URL="https://TON-SERVICE.onrender.com";</script>
 <nav>
   <a href="index.html" class="nav-logo">LibreCDI <span>Documentation</span></a>
   <div style="display:flex;gap:10px">
     <a href="faq.html" class="btn">FAQ</a>
     <a href="index.html" class="btn">← Accueil</a>
   </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">← Accueil</a>
+  <a href="docs.html">Documentation</a>
+  <a href="faq.html">FAQ</a>
+  <a href="status.html">Status</a>
+  <a href="report.html">Support</a>
+  <a href="#" onclick="goClient(event)" style="border:1px solid #45475a;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
+</div>
 
 <select id="mobile-mod-sel" onchange="if(this.value!=='')openModule(+this.value)"><option value="">📖 Choisir un module…</option></select>
 <div class="layout">
@@ -184,6 +208,19 @@ function openModule(idx) {
 buildSidebar();
 const hash = parseInt(location.hash.replace("#","")) - 1;
 if (hash >= 0 && hash < MODULES.length) openModule(hash);
+</script>
+<script>
+function goClient(e){e.preventDefault();window.location.href=RENDER_URL+'/client/login';}
+function toggleMenu(){
+  const n=document.getElementById('mobileNav'),b=document.getElementById('hamburger');
+  const open=n.classList.toggle('open');b.classList.toggle('open',open);
+}
+document.addEventListener('click',function(e){
+  const n=document.getElementById('mobileNav'),b=document.getElementById('hamburger');
+  if(n&&n.classList.contains('open')&&!n.contains(e.target)&&!b.contains(e.target)){
+    n.classList.remove('open');b.classList.remove('open');
+  }
+});
 </script>
 </body>
 </html>

@@ -687,6 +687,31 @@
       transform: translateY(0);
     }
 
+
+    /* ── HAMBURGER & MOBILE NAV ── */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 6px;
+    }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav {
+      display: none; position: fixed; top: 57px; left: 0; right: 0;
+      background: rgba(15,15,26,0.98); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border); z-index: 99;
+      padding: 16px; flex-direction: column; gap: 4px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      padding: 12px 16px; color: var(--muted); text-decoration: none;
+      font-size: 14px; border-radius: 10px; transition: all 0.15s;
+    }
+    .mobile-nav a:hover { background: var(--surface); color: var(--text); }
+    .mobile-nav .m-cta { background: var(--purple); color: #1e1e2e !important; font-weight: 700; text-align: center; margin-top: 8px; }
+    .mobile-nav .m-espace { border: 1px solid var(--border2); color: var(--muted) !important; text-align: center; }
+
     @media (max-width: 768px) {
       /* Nav : logo + CTA seulement */
       nav { padding: 12px 16px; gap: 8px; }
@@ -694,6 +719,7 @@
       .nav-cta { gap: 6px; }
       .nav-cta .btn:not(.btn-primary) { display: none; }
       .nav-cta .btn-primary { padding: 8px 14px; font-size: 12px; }
+      .hamburger { display: flex; }
 
       /* Hero */
       .hero { padding: 88px 20px 56px; }
@@ -745,6 +771,9 @@
 <body>
 
   <!-- NAV -->
+  <!-- 🔧 CONFIG — mettez ici l'URL de votre service Render -->
+  <script>const RENDER_URL = "https://TON-SERVICE.onrender.com";</script>
+
   <nav>
     <div class="nav-logo">LibreCDI <span>v3</span></div>
     <div class="nav-links">
@@ -757,9 +786,26 @@
     <div class="nav-cta">
       <a href="status.html" class="btn">Status</a>
       <a href="report.html" class="btn">Support</a>
+      <a id="nav-espace" href="#" class="btn" onclick="goClient(event)">Mon espace</a>
       <a href="#tarifs" class="btn btn-primary">Obtenir une licence</a>
     </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- Menu mobile -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#fonctionnalites" onclick="closeMenu()">Fonctionnalités</a>
+    <a href="docs.html">Documentation</a>
+    <a href="faq.html">FAQ</a>
+    <a href="#tarifs" onclick="closeMenu()">Tarifs</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+    <a href="status.html">Status</a>
+    <a href="report.html">Support</a>
+    <a href="#" class="m-espace" onclick="goClient(event)">Mon espace client</a>
+    <a href="#tarifs" class="m-cta" onclick="closeMenu()">Obtenir une licence</a>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -1078,6 +1124,31 @@
         btn.textContent = 'Envoyer le message';
       }
     }
+  </script>
+  <script>
+    function goClient(e) {
+      e.preventDefault();
+      window.location.href = RENDER_URL + '/client/login';
+    }
+    function toggleMenu() {
+      const nav = document.getElementById('mobileNav');
+      const btn = document.getElementById('hamburger');
+      const open = nav.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+    }
+    function closeMenu() {
+      document.getElementById('mobileNav').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    }
+    // Fermer menu si clic en dehors
+    document.addEventListener('click', function(e) {
+      const nav = document.getElementById('mobileNav');
+      const btn = document.getElementById('hamburger');
+      if (nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) {
+        closeMenu();
+      }
+    });
   </script>
 </body>
 </html>

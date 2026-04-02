@@ -1,368 +1,734 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LibreCDI — Signaler un problème</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:#0f0f1a;--surface:#1e1e2e;--surface2:#24273a;
-  --border:#313244;--border2:#45475a;
-  --text:#cdd6f4;--muted:#a6adc8;--faint:#6c7086;
-  --purple:#cba6f7;--blue:#89b4fa;--green:#a6e3a1;
-  --yellow:#f9e2af;--red:#f38ba8;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;
-  border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--purple);text-decoration:none;}
-.nav-logo span{color:var(--muted);font-weight:400;font-size:13px;margin-left:8px;}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:8px;
-  font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;transition:all 0.2s;
-  border:1px solid var(--border2);background:var(--surface);color:var(--text);
-  font-family:'DM Sans',sans-serif;}
-.btn:hover{background:var(--border2);}
-.btn-primary{background:var(--purple);color:var(--bg);border-color:var(--purple);}
-.btn-primary:hover{background:#b48ead;border-color:#b48ead;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LibreCDI — Signaler un problème</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1e1e2e;
+      --surface2: #24273a;
+      --border: #313244;
+      --border2: #45475a;
+      --text: #cdd6f4;
+      --muted: #a6adc8;
+      --faint: #6c7086;
+      --purple: #cba6f7;
+      --blue: #89b4fa;
+      --green: #a6e3a1;
+      --yellow: #f9e2af;
+      --red: #f38ba8;
+    }
 
-main{max-width:720px;margin:0 auto;padding:64px 24px 80px;}
-.page-header{margin-bottom:48px;}
-.page-header h1{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;
-  letter-spacing:-1px;margin-bottom:8px;}
-.page-header p{color:var(--muted);font-size:15px;line-height:1.6;}
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* Type selector */
-.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px;}
-.type-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  padding:20px 16px;text-align:center;cursor:pointer;transition:all 0.2s;
-  user-select:none;
-}
-.type-card:hover{border-color:var(--border2);}
-.type-card.selected{border-color:var(--purple);background:rgba(203,166,247,0.06);}
-.type-card .icon{font-size:24px;margin-bottom:8px;}
-.type-card .label{font-size:13px;font-weight:600;color:var(--muted);}
-.type-card.selected .label{color:var(--purple);}
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-/* Form */
-.form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;}
-.form-group{margin-bottom:20px;}
-.form-label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;
-  text-transform:uppercase;letter-spacing:0.05em;}
-.form-input{width:100%;padding:10px 14px;background:var(--surface2);
-  border:1px solid var(--border2);border-radius:8px;color:var(--text);
-  font-size:14px;font-family:'DM Sans',sans-serif;transition:border-color 0.2s;}
-.form-input:focus{outline:none;border-color:var(--purple);}
-textarea.form-input{resize:vertical;min-height:140px;line-height:1.6;}
-select.form-input{cursor:pointer;}
-.form-hint{font-size:12px;color:var(--faint);margin-top:5px;}
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      border-bottom: 1px solid var(--border);
+    }
 
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--purple);
+      text-decoration: none;
+    }
 
-/* Priority */
-.priority-row{display:flex;gap:8px;}
-.priority-btn{
-  flex:1;padding:8px;border-radius:8px;text-align:center;cursor:pointer;
-  font-size:12px;font-weight:600;border:1px solid var(--border2);
-  background:var(--surface2);color:var(--muted);transition:all 0.2s;
-  user-select:none;
-}
-.priority-btn:hover{border-color:var(--border2);}
-.priority-btn.selected-low{border-color:var(--green);color:var(--green);background:rgba(166,227,161,0.08);}
-.priority-btn.selected-medium{border-color:var(--yellow);color:var(--yellow);background:rgba(249,226,175,0.08);}
-.priority-btn.selected-high{border-color:var(--red);color:var(--red);background:rgba(243,139,168,0.08);}
+    .nav-logo span {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 13px;
+      margin-left: 8px;
+    }
 
-/* Version auto-info */
-.auto-info{
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:8px;padding:12px 16px;
-  display:flex;align-items:center;gap:12px;
-  font-size:13px;color:var(--muted);margin-bottom:24px;
-}
-.auto-info .icon{font-size:18px;}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+    }
 
-/* Success */
-.success-state{
-  text-align:center;padding:64px 32px;display:none;
-}
-.success-state .icon{font-size:56px;margin-bottom:16px;}
-.success-state h2{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;margin-bottom:8px;}
-.success-state p{color:var(--muted);line-height:1.6;}
+    .btn:hover {
+      background: var(--border2);
+    }
 
-footer{border-top:1px solid var(--border);padding:32px 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  color:var(--faint);font-size:13px;}
-footer a{color:var(--faint);text-decoration:none;}
-footer a:hover{color:var(--muted);}
+    .btn-primary {
+      background: var(--purple);
+      color: var(--bg);
+      border-color: var(--purple);
+    }
 
-@media(max-width:768px){
-  nav{padding:12px 16px;}
-  nav>div{gap:6px;}
-  /* garder seulement 1 bouton */
-  nav>div .btn:not(:last-child){display:none;}
-  main{padding:36px 16px 60px;}
-  .page-header{margin-bottom:28px;}
-  .page-header h1{font-size:26px;}
-  .page-header p{font-size:14px;}
-  .type-grid{grid-template-columns:repeat(3,1fr);gap:8px;}
-  .type-card{padding:14px 8px;}
-  .type-card .icon{font-size:20px;margin-bottom:6px;}
-  .type-card .label{font-size:11px;}
-  .form-card{padding:20px 16px;}
-  .form-row{grid-template-columns:1fr;}
-  .form-input{font-size:16px;} /* évite zoom iOS */
-  textarea.form-input{font-size:15px;}
-  .priority-row{gap:6px;}
-  .priority-btn{font-size:11px;padding:8px 4px;}
-  footer{flex-direction:column;gap:10px;text-align:center;padding:18px 16px;}
-  footer>div{justify-content:center;gap:14px;}
-}
-@media(max-width:380px){
-  .type-grid{grid-template-columns:1fr 1fr;}
-  .page-header h1{font-size:22px;}
-}
+    .btn-primary:hover {
+      background: #b48ead;
+      border-color: #b48ead;
+    }
 
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
-.hamburger span{display:block;width:22px;height:2px;background:var(--muted,#a6adc8);border-radius:2px;transition:all .3s;}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.hamburger.open span:nth-child(2){opacity:0;}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-.mobile-nav{display:none;position:fixed;top:57px;left:0;right:0;background:rgba(15,15,26,.98);
-  backdrop-filter:blur(16px);border-bottom:1px solid var(--border,#313244);z-index:99;
-  padding:16px;flex-direction:column;gap:4px;}
-.mobile-nav.open{display:flex;}
-.mobile-nav a{padding:12px 16px;color:var(--muted,#a6adc8);text-decoration:none;font-size:14px;border-radius:10px;}
-.mobile-nav a:hover{background:var(--surface,#1e1e2e);color:var(--text,#cdd6f4);}
-@media(max-width:768px){.hamburger{display:flex;}.nav-btns{display:none;}}
-</style>
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    .page-header {
+      margin-bottom: 48px;
+    }
+
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* Type selector */
+    .type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .type-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .type-card:hover {
+      border-color: var(--border2);
+    }
+
+    .type-card.selected {
+      border-color: var(--purple);
+      background: rgba(203, 166, 247, 0.06);
+    }
+
+    .type-card .icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .type-card .label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .type-card.selected .label {
+      color: var(--purple);
+    }
+
+    /* Form */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--purple);
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 140px;
+      line-height: 1.6;
+    }
+
+    select.form-input {
+      cursor: pointer;
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: var(--faint);
+      margin-top: 5px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Priority */
+    .priority-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .priority-btn {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      color: var(--muted);
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .priority-btn:hover {
+      border-color: var(--border2);
+    }
+
+    .priority-btn.selected-low {
+      border-color: var(--green);
+      color: var(--green);
+      background: rgba(166, 227, 161, 0.08);
+    }
+
+    .priority-btn.selected-medium {
+      border-color: var(--yellow);
+      color: var(--yellow);
+      background: rgba(249, 226, 175, 0.08);
+    }
+
+    .priority-btn.selected-high {
+      border-color: var(--red);
+      color: var(--red);
+      background: rgba(243, 139, 168, 0.08);
+    }
+
+    /* Version auto-info */
+    .auto-info {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .auto-info .icon {
+      font-size: 18px;
+    }
+
+    /* Success */
+    .success-state {
+      text-align: center;
+      padding: 64px 32px;
+      display: none;
+    }
+
+    .success-state .icon {
+      font-size: 56px;
+      margin-bottom: 16px;
+    }
+
+    .success-state h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .success-state p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--faint);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--faint);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--muted);
+    }
+
+    @media(max-width:768px) {
+      nav {
+        padding: 12px 16px;
+      }
+
+      nav>div {
+        gap: 6px;
+      }
+
+      /* garder seulement 1 bouton */
+      nav>div .btn:not(:last-child) {
+        display: none;
+      }
+
+      main {
+        padding: 36px 16px 60px;
+      }
+
+      .page-header {
+        margin-bottom: 28px;
+      }
+
+      .page-header h1 {
+        font-size: 26px;
+      }
+
+      .page-header p {
+        font-size: 14px;
+      }
+
+      .type-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+
+      .type-card {
+        padding: 14px 8px;
+      }
+
+      .type-card .icon {
+        font-size: 20px;
+        margin-bottom: 6px;
+      }
+
+      .type-card .label {
+        font-size: 11px;
+      }
+
+      .form-card {
+        padding: 20px 16px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-input {
+        font-size: 16px;
+      }
+
+      /* évite zoom iOS */
+      textarea.form-input {
+        font-size: 15px;
+      }
+
+      .priority-row {
+        gap: 6px;
+      }
+
+      .priority-btn {
+        font-size: 11px;
+        padding: 8px 4px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 18px 16px;
+      }
+
+      footer>div {
+        justify-content: center;
+        gap: 14px;
+      }
+    }
+
+    @media(max-width:380px) {
+      .type-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .page-header h1 {
+        font-size: 22px;
+      }
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--muted, #a6adc8);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 57px;
+      left: 0;
+      right: 0;
+      background: rgba(15, 15, 26, .98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border, #313244);
+      z-index: 99;
+      padding: 16px;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .mobile-nav.open {
+      display: flex;
+    }
+
+    .mobile-nav a {
+      padding: 12px 16px;
+      color: var(--muted, #a6adc8);
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 10px;
+    }
+
+    .mobile-nav a:hover {
+      background: var(--surface, #1e1e2e);
+      color: var(--text, #cdd6f4);
+    }
+
+    @media(max-width:768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-btns {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- 🔧 CONFIG -->
-<script>const RENDER_URL="https://TON-SERVICE.onrender.com";</script>
-<nav>
-  <a href="index.html" class="nav-logo">LibreCDI <span>Support</span></a>
-  <a href="status.html" class="btn">Status des services</a>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
-</nav>
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html">← Accueil</a>
-  <a href="docs.html">Documentation</a>
-  <a href="faq.html">FAQ</a>
-  <a href="status.html">Status</a>
-  <a href="report.html">Support</a>
-  <a href="#" onclick="goClient(event)" style="border:1px solid #45475a;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
-</div>
-
-<main>
-  <div class="page-header">
-    <h1>Signaler un problème</h1>
-    <p>Un bug, une question ou une suggestion ? Décrivez-nous votre problème, nous vous répondons sous 24h.</p>
-  </div>
-
-  <!-- Formulaire -->
-  <div id="formState">
-
-    <!-- Type de report -->
-    <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">
-      Type de demande
-    </div>
-    <div class="type-grid" style="margin-bottom:32px">
-      <div class="type-card selected" onclick="selectType(this,'bug')" data-type="bug">
-        <div class="icon">🐛</div>
-        <div class="label">Bug</div>
-      </div>
-      <div class="type-card" onclick="selectType(this,'question')" data-type="question">
-        <div class="icon">💬</div>
-        <div class="label">Question</div>
-      </div>
-      <div class="type-card" onclick="selectType(this,'feature')" data-type="feature">
-        <div class="icon">✨</div>
-        <div class="label">Suggestion</div>
-      </div>
-    </div>
-
-    <div class="form-card">
-
-      <!-- Infos auto si venant du panel -->
-      <div class="auto-info" id="autoInfo" style="display:none">
-        <span class="icon">ℹ️</span>
-        <span>Informations de votre installation récupérées automatiquement.</span>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Votre nom *</label>
-          <input class="form-input" id="f-name" type="text" required placeholder="Marie Dupont">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email *</label>
-          <input class="form-input" id="f-email" type="email" required placeholder="marie@college.fr">
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Version LibreCDI</label>
-          <input class="form-input" id="f-version" type="text" placeholder="3.0.0">
-          <div class="form-hint">Visible dans le panneau de contrôle</div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Système d'exploitation</label>
-          <select class="form-input" id="f-os">
-            <option value="">— Sélectionner —</option>
-            <option>Windows 10</option>
-            <option>Windows 11</option>
-            <option>Ubuntu / Linux</option>
-            <option>Autre</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Titre du problème *</label>
-        <input class="form-input" id="f-title" type="text" required
-               placeholder="Ex: Les emprunts ne s'enregistrent plus depuis la mise à jour">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Description détaillée *</label>
-        <textarea class="form-input" id="f-desc" required
-          placeholder="Décrivez ce qui se passe, ce que vous attendiez, et les étapes pour reproduire le problème..."></textarea>
-      </div>
-
-      <!-- Priorité (visible uniquement pour les bugs) -->
-      <div class="form-group" id="priorityGroup">
-        <label class="form-label">Priorité</label>
-        <div class="priority-row">
-          <div class="priority-btn selected-low" onclick="selectPriority(this,'low')">Faible</div>
-          <div class="priority-btn" onclick="selectPriority(this,'medium')">Moyenne</div>
-          <div class="priority-btn" onclick="selectPriority(this,'high')">Bloquant</div>
-        </div>
-        <div class="form-hint">Bloquant = le logiciel ne fonctionne plus du tout</div>
-      </div>
-
-      <button class="btn btn-primary" onclick="submitReport()" style="width:100%;justify-content:center;padding:12px">
-        Envoyer le rapport
-      </button>
-    </div>
-  </div>
-
-  <!-- Succès -->
-  <div class="success-state" id="successState">
-    <div class="icon">✅</div>
-    <h2>Rapport envoyé !</h2>
-    <p style="margin-bottom:24px">Merci pour votre signalement. Nous vous répondrons<br>à votre adresse email sous 24h.</p>
-    <a href="index.html" class="btn">Retour à l'accueil</a>
-  </div>
-
-</main>
-
-<footer>
-  <div>
-    <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--purple)">LibreCDI</span>
-    <span style="margin-left:16px">Support</span>
-  </div>
-  <div style="display:flex;gap:24px">
-    <a href="index.html">Accueil</a>
+  <!-- 🔧 CONFIG -->
+  <script>const RENDER_URL = "https://librecdi-license-server.onrender.com/client/login";</script>
+  <nav>
+    <a href="index.html" class="nav-logo">LibreCDI <span>Support</span></a>
+    <a href="status.html" class="btn">Status des services</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()"
+      aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">← Accueil</a>
+    <a href="docs.html">Documentation</a>
+    <a href="faq.html">FAQ</a>
     <a href="status.html">Status</a>
+    <a href="report.html">Support</a>
+    <a href="#" onclick="goClient(event)"
+      style="border:1px solid #45475a;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
   </div>
-</footer>
 
-<script>
-let selectedType     = "bug";
-let selectedPriority = "low";
+  <main>
+    <div class="page-header">
+      <h1>Signaler un problème</h1>
+      <p>Un bug, une question ou une suggestion ? Décrivez-nous votre problème, nous vous répondons sous 24h.</p>
+    </div>
 
-// Pré-remplir si paramètres URL (depuis panel.py)
-const params = new URLSearchParams(window.location.search);
-if (params.get("version")) {
-  document.getElementById("f-version").value = params.get("version");
-  document.getElementById("autoInfo").style.display = "flex";
-}
-if (params.get("os")) {
-  const osEl = document.getElementById("f-os");
-  [...osEl.options].forEach(o => { if (o.text.toLowerCase().includes(params.get("os").toLowerCase())) osEl.value = o.value; });
-}
+    <!-- Formulaire -->
+    <div id="formState">
 
-function selectType(el, type) {
-  document.querySelectorAll(".type-card").forEach(c => c.classList.remove("selected"));
-  el.classList.add("selected");
-  selectedType = type;
-  document.getElementById("priorityGroup").style.display = type === "bug" ? "" : "none";
-}
+      <!-- Type de report -->
+      <div
+        style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">
+        Type de demande
+      </div>
+      <div class="type-grid" style="margin-bottom:32px">
+        <div class="type-card selected" onclick="selectType(this,'bug')" data-type="bug">
+          <div class="icon">🐛</div>
+          <div class="label">Bug</div>
+        </div>
+        <div class="type-card" onclick="selectType(this,'question')" data-type="question">
+          <div class="icon">💬</div>
+          <div class="label">Question</div>
+        </div>
+        <div class="type-card" onclick="selectType(this,'feature')" data-type="feature">
+          <div class="icon">✨</div>
+          <div class="label">Suggestion</div>
+        </div>
+      </div>
 
-function selectPriority(el, p) {
-  document.querySelectorAll(".priority-btn").forEach(b => b.className = "priority-btn");
-  el.classList.add("selected-" + p);
-  selectedPriority = p;
-}
+      <div class="form-card">
 
-async function submitReport() {
-  const name    = document.getElementById("f-name").value.trim();
-  const email   = document.getElementById("f-email").value.trim();
-  const title   = document.getElementById("f-title").value.trim();
-  const desc    = document.getElementById("f-desc").value.trim();
-  const version = document.getElementById("f-version").value.trim();
-  const os      = document.getElementById("f-os").value;
+        <!-- Infos auto si venant du panel -->
+        <div class="auto-info" id="autoInfo" style="display:none">
+          <span class="icon">ℹ️</span>
+          <span>Informations de votre installation récupérées automatiquement.</span>
+        </div>
 
-  if (!name || !email || !title || !desc) {
-    alert("Merci de remplir tous les champs obligatoires (*)");
-    return;
-  }
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Votre nom *</label>
+            <input class="form-input" id="f-name" type="text" required placeholder="Marie Dupont">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input class="form-input" id="f-email" type="email" required placeholder="marie@college.fr">
+          </div>
+        </div>
 
-  const typeLabels = { bug: "Bug", question: "Question", feature: "Suggestion" };
-  const prioLabels = { low: "Faible", medium: "Moyenne", high: "Bloquant" };
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Version LibreCDI</label>
+            <input class="form-input" id="f-version" type="text" placeholder="3.0.0">
+            <div class="form-hint">Visible dans le panneau de contrôle</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Système d'exploitation</label>
+            <select class="form-input" id="f-os">
+              <option value="">— Sélectionner —</option>
+              <option>Windows 10</option>
+              <option>Windows 11</option>
+              <option>Ubuntu / Linux</option>
+              <option>Autre</option>
+            </select>
+          </div>
+        </div>
 
-  const btn = document.querySelector("button.btn-primary");
-  btn.disabled = true;
-  btn.textContent = "Envoi en cours...";
+        <div class="form-group">
+          <label class="form-label">Titre du problème *</label>
+          <input class="form-input" id="f-title" type="text" required
+            placeholder="Ex: Les emprunts ne s'enregistrent plus depuis la mise à jour">
+        </div>
 
-  const data = new FormData();
-  data.append("name",     name);
-  data.append("email",    email);
-  data.append("type",     typeLabels[selectedType]);
-  data.append("priority", selectedType === "bug" ? prioLabels[selectedPriority] : "—");
-  data.append("version",  version || "Non renseigne");
-  data.append("os",       os      || "Non renseigne");
-  data.append("title",    title);
-  data.append("message",  desc);
+        <div class="form-group">
+          <label class="form-label">Description détaillée *</label>
+          <textarea class="form-input" id="f-desc" required
+            placeholder="Décrivez ce qui se passe, ce que vous attendiez, et les étapes pour reproduire le problème..."></textarea>
+        </div>
 
-  try {
-    const r = await fetch("https://formspree.io/f/xzdjyryk", {
-      method: "POST", body: data,
-      headers: { "Accept": "application/json" }
-    });
-    if (r.ok) {
-      document.getElementById("formState").style.display = "none";
-      document.getElementById("successState").style.display = "block";
-    } else {
-      throw new Error("Erreur serveur");
+        <!-- Priorité (visible uniquement pour les bugs) -->
+        <div class="form-group" id="priorityGroup">
+          <label class="form-label">Priorité</label>
+          <div class="priority-row">
+            <div class="priority-btn selected-low" onclick="selectPriority(this,'low')">Faible</div>
+            <div class="priority-btn" onclick="selectPriority(this,'medium')">Moyenne</div>
+            <div class="priority-btn" onclick="selectPriority(this,'high')">Bloquant</div>
+          </div>
+          <div class="form-hint">Bloquant = le logiciel ne fonctionne plus du tout</div>
+        </div>
+
+        <button class="btn btn-primary" onclick="submitReport()" style="width:100%;justify-content:center;padding:12px">
+          Envoyer le rapport
+        </button>
+      </div>
+    </div>
+
+    <!-- Succès -->
+    <div class="success-state" id="successState">
+      <div class="icon">✅</div>
+      <h2>Rapport envoyé !</h2>
+      <p style="margin-bottom:24px">Merci pour votre signalement. Nous vous répondrons<br>à votre adresse email sous
+        24h.</p>
+      <a href="index.html" class="btn">Retour à l'accueil</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <div>
+      <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--purple)">LibreCDI</span>
+      <span style="margin-left:16px">Support</span>
+    </div>
+    <div style="display:flex;gap:24px">
+      <a href="index.html">Accueil</a>
+      <a href="status.html">Status</a>
+    </div>
+  </footer>
+
+  <script>
+    let selectedType = "bug";
+    let selectedPriority = "low";
+
+    // Pré-remplir si paramètres URL (depuis panel.py)
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("version")) {
+      document.getElementById("f-version").value = params.get("version");
+      document.getElementById("autoInfo").style.display = "flex";
     }
-  } catch(err) {
-    alert("Erreur lors de l'envoi. Reessayez ou ecrivez a mathieu.gaillardin@gmail.com");
-    btn.disabled = false;
-    btn.textContent = "Envoyer le rapport";
-  }
-}
+    if (params.get("os")) {
+      const osEl = document.getElementById("f-os");
+      [...osEl.options].forEach(o => { if (o.text.toLowerCase().includes(params.get("os").toLowerCase())) osEl.value = o.value; });
+    }
 
-// Initialiser
-document.getElementById("priorityGroup").style.display = "";
-</script>
-<script>
-function goClient(e){e.preventDefault();window.location.href=RENDER_URL+'/client/login';}
-function toggleMenu(){
-  const n=document.getElementById('mobileNav'),b=document.getElementById('hamburger');
-  const open=n.classList.toggle('open');b.classList.toggle('open',open);
-}
-document.addEventListener('click',function(e){
-  const n=document.getElementById('mobileNav'),b=document.getElementById('hamburger');
-  if(n&&n.classList.contains('open')&&!n.contains(e.target)&&!b.contains(e.target)){
-    n.classList.remove('open');b.classList.remove('open');
-  }
-});
-</script>
+    function selectType(el, type) {
+      document.querySelectorAll(".type-card").forEach(c => c.classList.remove("selected"));
+      el.classList.add("selected");
+      selectedType = type;
+      document.getElementById("priorityGroup").style.display = type === "bug" ? "" : "none";
+    }
+
+    function selectPriority(el, p) {
+      document.querySelectorAll(".priority-btn").forEach(b => b.className = "priority-btn");
+      el.classList.add("selected-" + p);
+      selectedPriority = p;
+    }
+
+    async function submitReport() {
+      const name = document.getElementById("f-name").value.trim();
+      const email = document.getElementById("f-email").value.trim();
+      const title = document.getElementById("f-title").value.trim();
+      const desc = document.getElementById("f-desc").value.trim();
+      const version = document.getElementById("f-version").value.trim();
+      const os = document.getElementById("f-os").value;
+
+      if (!name || !email || !title || !desc) {
+        alert("Merci de remplir tous les champs obligatoires (*)");
+        return;
+      }
+
+      const typeLabels = { bug: "Bug", question: "Question", feature: "Suggestion" };
+      const prioLabels = { low: "Faible", medium: "Moyenne", high: "Bloquant" };
+
+      const btn = document.querySelector("button.btn-primary");
+      btn.disabled = true;
+      btn.textContent = "Envoi en cours...";
+
+      const data = new FormData();
+      data.append("name", name);
+      data.append("email", email);
+      data.append("type", typeLabels[selectedType]);
+      data.append("priority", selectedType === "bug" ? prioLabels[selectedPriority] : "—");
+      data.append("version", version || "Non renseigne");
+      data.append("os", os || "Non renseigne");
+      data.append("title", title);
+      data.append("message", desc);
+
+      try {
+        const r = await fetch("https://formspree.io/f/xzdjyryk", {
+          method: "POST", body: data,
+          headers: { "Accept": "application/json" }
+        });
+        if (r.ok) {
+          document.getElementById("formState").style.display = "none";
+          document.getElementById("successState").style.display = "block";
+        } else {
+          throw new Error("Erreur serveur");
+        }
+      } catch (err) {
+        alert("Erreur lors de l'envoi. Reessayez ou ecrivez a mathieu.gaillardin@gmail.com");
+        btn.disabled = false;
+        btn.textContent = "Envoyer le rapport";
+      }
+    }
+
+    // Initialiser
+    document.getElementById("priorityGroup").style.display = "";
+  </script>
+  <script>
+    function goClient(e) { e.preventDefault(); window.location.href = RENDER_URL + '/client/login'; }
+    function toggleMenu() {
+      const n = document.getElementById('mobileNav'), b = document.getElementById('hamburger');
+      const open = n.classList.toggle('open'); b.classList.toggle('open', open);
+    }
+    document.addEventListener('click', function (e) {
+      const n = document.getElementById('mobileNav'), b = document.getElementById('hamburger');
+      if (n && n.classList.contains('open') && !n.contains(e.target) && !b.contains(e.target)) {
+        n.classList.remove('open'); b.classList.remove('open');
+      }
+    });
+  </script>
 </body>
+
 </html>

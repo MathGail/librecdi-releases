@@ -1,383 +1,800 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LibreCDI — FAQ</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0f0f1a;--surface:#1e1e2e;--surface2:#24273a;--border:#313244;--border2:#45475a;
-  --text:#cdd6f4;--muted:#a6adc8;--faint:#6c7086;--purple:#cba6f7;--blue:#89b4fa;
-  --green:#a6e3a1;--yellow:#f9e2af;--red:#f38ba8;}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;
-  border-bottom:1px solid var(--border);position:sticky;top:0;
-  background:rgba(15,15,26,0.95);backdrop-filter:blur(12px);z-index:100;}
-.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--purple);text-decoration:none;}
-.nav-logo span{color:var(--muted);font-weight:400;font-size:13px;margin-left:8px;}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;
-  font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;
-  border:1px solid var(--border2);background:var(--surface);color:var(--text);
-  font-family:'DM Sans',sans-serif;transition:all 0.2s;}
-.btn:hover{background:var(--border2);}
-.btn-primary{background:var(--purple);color:#1e1e2e;border-color:var(--purple);}
-.btn-primary:hover{background:#b48ead;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LibreCDI — FAQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1e1e2e;
+      --surface2: #24273a;
+      --border: #313244;
+      --border2: #45475a;
+      --text: #cdd6f4;
+      --muted: #a6adc8;
+      --faint: #6c7086;
+      --purple: #cba6f7;
+      --blue: #89b4fa;
+      --green: #a6e3a1;
+      --yellow: #f9e2af;
+      --red: #f38ba8;
+    }
 
-main{max-width:840px;margin:0 auto;padding:64px 24px 80px;}
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* Hero */
-.hero{text-align:center;margin-bottom:56px;}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(28px,5vw,44px);font-weight:800;
-  letter-spacing:-1px;margin-bottom:12px;}
-.hero h1 em{font-style:normal;color:var(--purple);}
-.hero p{color:var(--muted);font-size:15px;max-width:500px;margin:0 auto 28px;}
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* Search */
-.search-wrap{position:relative;max-width:480px;margin:0 auto;}
-.search-input{width:100%;padding:13px 20px 13px 46px;background:var(--surface);
-  border:1px solid var(--border2);border-radius:12px;color:var(--text);
-  font-size:14px;font-family:'DM Sans',sans-serif;transition:border-color 0.2s;}
-.search-input:focus{outline:none;border-color:var(--purple);}
-.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);
-  color:var(--faint);font-size:16px;pointer-events:none;}
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-/* Categories */
-.categories{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;}
-.cat-btn{padding:6px 16px;border-radius:20px;border:1px solid var(--border2);
-  background:transparent;color:var(--muted);cursor:pointer;font-size:13px;
-  font-family:'DM Sans',sans-serif;transition:all 0.15s;}
-.cat-btn:hover{border-color:var(--purple);color:var(--purple);}
-.cat-btn.active{background:var(--purple);color:#1e1e2e;border-color:var(--purple);font-weight:600;}
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(15, 15, 26, 0.95);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
 
-/* FAQ items */
-.faq-section{margin-bottom:40px;}
-.faq-section-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;
-  color:var(--purple);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
-.faq-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--purple);
+      text-decoration: none;
+    }
 
-.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  margin-bottom:10px;overflow:hidden;transition:border-color 0.2s;}
-.faq-item:hover{border-color:var(--border2);}
-.faq-item.open{border-color:var(--purple);}
-.faq-q{display:flex;align-items:center;justify-content:space-between;
-  padding:18px 22px;cursor:pointer;user-select:none;gap:16px;}
-.faq-q-text{font-size:14px;font-weight:600;color:var(--text);line-height:1.4;}
-.faq-chevron{color:var(--faint);font-size:18px;transition:transform 0.2s;flex-shrink:0;}
-.faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--purple);}
-.faq-a{max-height:0;overflow:hidden;transition:max-height 0.3s ease;}
-.faq-a-inner{padding:0 22px 20px;color:var(--muted);font-size:14px;line-height:1.7;
-  border-top:1px solid var(--border);}
-.faq-a-inner p{margin-bottom:10px;}
-.faq-a-inner p:last-child{margin-bottom:0;}
-.faq-a-inner strong{color:var(--text);}
-.faq-a-inner a{color:var(--blue);text-decoration:none;}
-.faq-a-inner a:hover{text-decoration:underline;}
-.faq-a-inner code{background:var(--surface2);color:var(--blue);padding:2px 6px;
-  border-radius:4px;font-size:12px;font-family:monospace;}
+    .nav-logo span {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 13px;
+      margin-left: 8px;
+    }
 
-/* No results */
-.no-results{text-align:center;padding:48px;color:var(--faint);}
-.no-results p{margin-top:8px;font-size:13px;}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
 
-/* CTA */
-.cta{background:var(--surface);border:1px solid var(--border);border-radius:16px;
-  padding:36px;text-align:center;margin-top:48px;}
-.cta h2{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px;}
-.cta p{color:var(--muted);font-size:14px;margin-bottom:20px;}
-.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+    .btn:hover {
+      background: var(--border2);
+    }
 
-footer{border-top:1px solid var(--border);padding:28px 48px;
-  display:flex;justify-content:space-between;color:var(--faint);font-size:12px;}
-footer a{color:var(--faint);text-decoration:none;}
-footer a:hover{color:var(--muted);}
-@media(max-width:768px){
-  nav{padding:12px 16px;}
-  nav>div{gap:6px;}
-  nav>div .btn:not(:last-child){display:none;}
-  main{padding:40px 16px 56px;}
-  .hero{margin-bottom:32px;}
-  .hero h1{font-size:clamp(26px,8vw,40px);}
-  .hero p{font-size:14px;}
-  .search-input{font-size:16px;} /* évite zoom iOS */
-  .categories{gap:6px;}
-  .cat-btn{font-size:12px;padding:6px 12px;}
-  .faq-section{margin-bottom:28px;}
-  .faq-group-title{font-size:14px;padding-bottom:10px;}
-  .faq-q{padding:14px 16px;font-size:13px;}
-  .faq-a{padding:0 16px 14px;font-size:13px;line-height:1.65;}
-  .cta-box{padding:28px 20px;}
-  .cta-box h2{font-size:20px;}
-  .cta-btns{flex-direction:column;align-items:stretch;}
-  .cta-btns .btn{text-align:center;justify-content:center;}
-  footer{flex-direction:column;gap:12px;text-align:center;padding:18px 16px;}
-  footer>div{justify-content:center;gap:14px;}
-}
-@media(max-width:400px){
-  .hero h1{font-size:24px;}
-}
+    .btn-primary {
+      background: var(--purple);
+      color: #1e1e2e;
+      border-color: var(--purple);
+    }
 
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
-.hamburger span{display:block;width:22px;height:2px;background:var(--muted,#a6adc8);border-radius:2px;transition:all .3s;}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.hamburger.open span:nth-child(2){opacity:0;}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-.mobile-nav{display:none;position:fixed;top:57px;left:0;right:0;background:rgba(15,15,26,.98);
-  backdrop-filter:blur(16px);border-bottom:1px solid var(--border,#313244);z-index:99;
-  padding:16px;flex-direction:column;gap:4px;}
-.mobile-nav.open{display:flex;}
-.mobile-nav a{padding:12px 16px;color:var(--muted,#a6adc8);text-decoration:none;font-size:14px;border-radius:10px;}
-.mobile-nav a:hover{background:var(--surface,#1e1e2e);color:var(--text,#cdd6f4);}
-@media(max-width:768px){.hamburger{display:flex;}.nav-btns{display:none;}}
-</style>
+    .btn-primary:hover {
+      background: #b48ead;
+    }
+
+    main {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--purple);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 500px;
+      margin: 0 auto 28px;
+    }
+
+    /* Search */
+    .search-wrap {
+      position: relative;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 13px 20px 13px 46px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--purple);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--faint);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    /* Categories */
+    .categories {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .cat-btn {
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.15s;
+    }
+
+    .cat-btn:hover {
+      border-color: var(--purple);
+      color: var(--purple);
+    }
+
+    .cat-btn.active {
+      background: var(--purple);
+      color: #1e1e2e;
+      border-color: var(--purple);
+      font-weight: 600;
+    }
+
+    /* FAQ items */
+    .faq-section {
+      margin-bottom: 40px;
+    }
+
+    .faq-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--purple);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .faq-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item:hover {
+      border-color: var(--border2);
+    }
+
+    .faq-item.open {
+      border-color: var(--purple);
+    }
+
+    .faq-q {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      cursor: pointer;
+      user-select: none;
+      gap: 16px;
+    }
+
+    .faq-q-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .faq-chevron {
+      color: var(--faint);
+      font-size: 18px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+      color: var(--purple);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-a-inner {
+      padding: 0 22px 20px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-a-inner p {
+      margin-bottom: 10px;
+    }
+
+    .faq-a-inner p:last-child {
+      margin-bottom: 0;
+    }
+
+    .faq-a-inner strong {
+      color: var(--text);
+    }
+
+    .faq-a-inner a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .faq-a-inner a:hover {
+      text-decoration: underline;
+    }
+
+    .faq-a-inner code {
+      background: var(--surface2);
+      color: var(--blue);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: monospace;
+    }
+
+    /* No results */
+    .no-results {
+      text-align: center;
+      padding: 48px;
+      color: var(--faint);
+    }
+
+    .no-results p {
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    /* CTA */
+    .cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .cta h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .cta p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--faint);
+      font-size: 12px;
+    }
+
+    footer a {
+      color: var(--faint);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--muted);
+    }
+
+    @media(max-width:768px) {
+      nav {
+        padding: 12px 16px;
+      }
+
+      nav>div {
+        gap: 6px;
+      }
+
+      nav>div .btn:not(:last-child) {
+        display: none;
+      }
+
+      main {
+        padding: 40px 16px 56px;
+      }
+
+      .hero {
+        margin-bottom: 32px;
+      }
+
+      .hero h1 {
+        font-size: clamp(26px, 8vw, 40px);
+      }
+
+      .hero p {
+        font-size: 14px;
+      }
+
+      .search-input {
+        font-size: 16px;
+      }
+
+      /* évite zoom iOS */
+      .categories {
+        gap: 6px;
+      }
+
+      .cat-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+
+      .faq-section {
+        margin-bottom: 28px;
+      }
+
+      .faq-group-title {
+        font-size: 14px;
+        padding-bottom: 10px;
+      }
+
+      .faq-q {
+        padding: 14px 16px;
+        font-size: 13px;
+      }
+
+      .faq-a {
+        padding: 0 16px 14px;
+        font-size: 13px;
+        line-height: 1.65;
+      }
+
+      .cta-box {
+        padding: 28px 20px;
+      }
+
+      .cta-box h2 {
+        font-size: 20px;
+      }
+
+      .cta-btns {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .cta-btns .btn {
+        text-align: center;
+        justify-content: center;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 18px 16px;
+      }
+
+      footer>div {
+        justify-content: center;
+        gap: 14px;
+      }
+    }
+
+    @media(max-width:400px) {
+      .hero h1 {
+        font-size: 24px;
+      }
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--muted, #a6adc8);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 57px;
+      left: 0;
+      right: 0;
+      background: rgba(15, 15, 26, .98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border, #313244);
+      z-index: 99;
+      padding: 16px;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .mobile-nav.open {
+      display: flex;
+    }
+
+    .mobile-nav a {
+      padding: 12px 16px;
+      color: var(--muted, #a6adc8);
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 10px;
+    }
+
+    .mobile-nav a:hover {
+      background: var(--surface, #1e1e2e);
+      color: var(--text, #cdd6f4);
+    }
+
+    @media(max-width:768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-btns {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- 🔧 CONFIG — URL Render -->
-<script>const RENDER_URL = "https://TON-SERVICE.onrender.com";</script>
-<nav>
-  <a href="index.html" class="nav-logo">LibreCDI <span>FAQ</span></a>
-  <div style="display:flex;gap:8px" class="nav-btns">
-    <a href="docs.html" class="btn">Documentation</a>
-    <a href="#" class="btn" onclick="goClient(event)">Mon espace</a>
-    <a href="index.html" class="btn">← Accueil</a>
-  </div>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html">← Accueil</a>
-  <a href="docs.html">Documentation</a>
-  <a href="status.html">Status</a>
-  <a href="report.html">Support</a>
-  <a href="#" onclick="goClient(event)" style="border:1px solid #45475a;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
-</div>
-
-<main>
-  <div class="hero">
-    <h1>Questions <em>fréquentes</em></h1>
-    <p>Tout ce que vous devez savoir sur LibreCDI, avant et après l'achat.</p>
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input class="search-input" id="searchInput" type="text"
-             placeholder="Rechercher une question..."
-             oninput="filterFaq(this.value)">
+  <!-- 🔧 CONFIG — URL Render -->
+  <script>const RENDER_URL = "https://librecdi-license-server.onrender.com/client/login";</script>
+  <nav>
+    <a href="index.html" class="nav-logo">LibreCDI <span>FAQ</span></a>
+    <div style="display:flex;gap:8px" class="nav-btns">
+      <a href="docs.html" class="btn">Documentation</a>
+      <a href="#" class="btn" onclick="goClient(event)">Mon espace</a>
+      <a href="index.html" class="btn">← Accueil</a>
     </div>
-  </div>
-
-  <div class="categories" id="categories">
-    <button class="cat-btn active" onclick="filterCat('all', this)">Toutes</button>
-    <button class="cat-btn" onclick="filterCat('general', this)">General</button>
-    <button class="cat-btn" onclick="filterCat('licence', this)">Licence</button>
-    <button class="cat-btn" onclick="filterCat('technique', this)">Technique</button>
-    <button class="cat-btn" onclick="filterCat('donnees', this)">Donnees</button>
-  </div>
-
-  <div id="faqContainer"></div>
-
-  <div class="no-results" id="noResults" style="display:none">
-    <div style="font-size:32px">🤔</div>
-    <p>Aucune question ne correspond a votre recherche.</p>
-  </div>
-
-  <div class="cta">
-    <h2>Vous n'avez pas trouve votre reponse ?</h2>
-    <p>Notre equipe repond sous 24h du lundi au vendredi.</p>
-    <div class="cta-btns">
-      <a href="report.html" class="btn btn-primary">Nous contacter</a>
-      <a href="docs.html" class="btn">Consulter la documentation complete</a>
-    </div>
-  </div>
-</main>
-
-<footer>
-  <span>LibreCDI v3 — Questions frequentes</span>
-  <div style="display:flex;gap:20px">
-    <a href="index.html">Accueil</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">← Accueil</a>
     <a href="docs.html">Documentation</a>
+    <a href="status.html">Status</a>
     <a href="report.html">Support</a>
+    <a href="#" onclick="goClient(event)"
+      style="border:1px solid #45475a;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
   </div>
-</footer>
 
-<script>
-const FAQ = [
-  // GENERAL
-  {
-    cat: "general",
-    section: "A propos de LibreCDI",
-    q: "C'est quoi LibreCDI exactement ?",
-    a: `<p>LibreCDI est un logiciel de gestion de CDI (Centre de Documentation et d'Information) scolaire.
+  <main>
+    <div class="hero">
+      <h1>Questions <em>fréquentes</em></h1>
+      <p>Tout ce que vous devez savoir sur LibreCDI, avant et après l'achat.</p>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" id="searchInput" type="text" placeholder="Rechercher une question..."
+          oninput="filterFaq(this.value)">
+      </div>
+    </div>
+
+    <div class="categories" id="categories">
+      <button class="cat-btn active" onclick="filterCat('all', this)">Toutes</button>
+      <button class="cat-btn" onclick="filterCat('general', this)">General</button>
+      <button class="cat-btn" onclick="filterCat('licence', this)">Licence</button>
+      <button class="cat-btn" onclick="filterCat('technique', this)">Technique</button>
+      <button class="cat-btn" onclick="filterCat('donnees', this)">Donnees</button>
+    </div>
+
+    <div id="faqContainer"></div>
+
+    <div class="no-results" id="noResults" style="display:none">
+      <div style="font-size:32px">🤔</div>
+      <p>Aucune question ne correspond a votre recherche.</p>
+    </div>
+
+    <div class="cta">
+      <h2>Vous n'avez pas trouve votre reponse ?</h2>
+      <p>Notre equipe repond sous 24h du lundi au vendredi.</p>
+      <div class="cta-btns">
+        <a href="report.html" class="btn btn-primary">Nous contacter</a>
+        <a href="docs.html" class="btn">Consulter la documentation complete</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>LibreCDI v3 — Questions frequentes</span>
+    <div style="display:flex;gap:20px">
+      <a href="index.html">Accueil</a>
+      <a href="docs.html">Documentation</a>
+      <a href="report.html">Support</a>
+    </div>
+  </footer>
+
+  <script>
+    const FAQ = [
+      // GENERAL
+      {
+        cat: "general",
+        section: "A propos de LibreCDI",
+        q: "C'est quoi LibreCDI exactement ?",
+        a: `<p>LibreCDI est un logiciel de gestion de CDI (Centre de Documentation et d'Information) scolaire.
     Il permet aux professeurs documentalistes de gerer leur catalogue de livres, les emprunts et retours
     des eleves, les retards, et bien plus encore.</p>
     <p>Le logiciel s'installe sur le PC du CDI et est accessible depuis n'importe quel navigateur
     sur le reseau de l'etablissement — sans abonnement internet requis pour l'utilisation quotidienne.</p>`
-  },
-  {
-    cat: "technique",
-    section: "A propos de LibreCDI",
-    q: "Sur quel systeme fonctionne LibreCDI ?",
-    a: `<p>LibreCDI fonctionne sur <strong>Windows 10 et Windows 11</strong> (64 bits).
+      },
+      {
+        cat: "technique",
+        section: "A propos de LibreCDI",
+        q: "Sur quel systeme fonctionne LibreCDI ?",
+        a: `<p>LibreCDI fonctionne sur <strong>Windows 10 et Windows 11</strong> (64 bits).
     L'installeur configure automatiquement tout ce dont le logiciel a besoin.</p>
     <p>Une version Linux est disponible pour les utilisateurs avances, mais necessite
     une installation manuelle. Contactez le support pour plus d'informations.</p>`
-  },
-  {
-    cat: "general",
-    section: "A propos de LibreCDI",
-    q: "Le logiciel fonctionne-t-il sans internet ?",
-    a: `<p>Oui, <strong>l'utilisation quotidienne ne necessite pas d'internet</strong>.
+      },
+      {
+        cat: "general",
+        section: "A propos de LibreCDI",
+        q: "Le logiciel fonctionne-t-il sans internet ?",
+        a: `<p>Oui, <strong>l'utilisation quotidienne ne necessite pas d'internet</strong>.
     Le logiciel tourne entierement sur votre ordinateur — vous pouvez gerer vos emprunts
     et retours meme si le reseau de votre etablissement n'a pas acces a internet.</p>
     <p>Seules quelques fonctions necessitent une connexion : la validation de licence
     (une fois au demarrage, avec un cache de 24h), les sauvegardes GitHub,
     et les mises a jour automatiques.</p>`
-  },
-  {
-    cat: "general",
-    section: "A propos de LibreCDI",
-    q: "Combien d'eleves et de livres peut-on gerer ?",
-    a: `<p>Il n'y a <strong>aucune limite</strong> dans LibreCDI. Le logiciel peut gerer des
+      },
+      {
+        cat: "general",
+        section: "A propos de LibreCDI",
+        q: "Combien d'eleves et de livres peut-on gerer ?",
+        a: `<p>Il n'y a <strong>aucune limite</strong> dans LibreCDI. Le logiciel peut gerer des
     catalogues de plusieurs milliers de livres et des fichiers eleves de centaines d'eleves
     sans aucune degradation des performances.</p>`
-  },
-  // LICENCE
-  {
-    cat: "licence",
-    section: "Licence et achat",
-    q: "Comment obtenir ma cle apres l'achat ?",
-    a: `<p>Apres votre paiement, vous recevez <strong>deux emails</strong> :</p>
+      },
+      // LICENCE
+      {
+        cat: "licence",
+        section: "Licence et achat",
+        q: "Comment obtenir ma cle apres l'achat ?",
+        a: `<p>Apres votre paiement, vous recevez <strong>deux emails</strong> :</p>
     <p>1. Un recu de Stripe confirment votre achat.</p>
     <p>2. Un email de LibreCDI contenant votre cle de licence au format <code>LCDI-XXXX-XXXX-XXXX</code>.</p>
     <p>Si vous ne recevez pas l'email dans les 10 minutes, verifiez vos spams ou
     <a href="report.html">contactez le support</a>.</p>`
-  },
-  {
-    cat: "licence",
-    section: "Licence et achat",
-    q: "Que se passe-t-il si je change d'ordinateur ?",
-    a: `<p>Votre licence est liee a un seul ordinateur. Si vous changez de PC,
+      },
+      {
+        cat: "licence",
+        section: "Licence et achat",
+        q: "Que se passe-t-il si je change d'ordinateur ?",
+        a: `<p>Votre licence est liee a un seul ordinateur. Si vous changez de PC,
     <a href="report.html">contactez le support</a> en indiquant votre cle de licence.</p>
     <p>Nous transferons l'activation sur votre nouvel ordinateur gratuitement, une fois par an.
     Vos donnees sont restaurables depuis votre sauvegarde GitHub.</p>`
-  },
-  {
-    cat: "licence",
-    section: "Licence et achat",
-    q: "Comment renouveler ma licence ?",
-    a: `<p>Votre licence est valable <strong>1 an</strong> a compter de la date d'activation.
+      },
+      {
+        cat: "licence",
+        section: "Licence et achat",
+        q: "Comment renouveler ma licence ?",
+        a: `<p>Votre licence est valable <strong>1 an</strong> a compter de la date d'activation.
     Vous recevez un email de rappel 30 jours avant l'expiration.</p>
     <p>Pour renouveler, rendez-vous sur <a href="index.html#tarifs">librecdi.fr</a>
     et effectuez un nouvel achat. Votre nouvelle cle sera envoyee par email.</p>
     <p>En attendant l'expiration, le logiciel continue de fonctionner normalement.</p>`
-  },
-  {
-    cat: "licence",
-    section: "Licence et achat",
-    q: "Ma licence couvre combien de postes ?",
-    a: `<p>La <strong>Licence standard</strong> couvre <strong>1 poste</strong>
+      },
+      {
+        cat: "licence",
+        section: "Licence et achat",
+        q: "Ma licence couvre combien de postes ?",
+        a: `<p>La <strong>Licence standard</strong> couvre <strong>1 poste</strong>
     (1 ordinateur). C'est suffisant pour un CDI car l'interface est accessible
     depuis n'importe quel navigateur sur le reseau de l'etablissement.</p>
     <p>Pour plusieurs etablissements, un devis personnalise est disponible.
     <a href="index.html#contact">Contactez-nous.</a></p>`
-  },
-  // TECHNIQUE
-  {
-    cat: "technique",
-    section: "Questions techniques",
-    q: "Le navigateur affiche un avertissement de securite, est-ce normal ?",
-    a: `<p>Oui, c'est tout a fait normal. LibreCDI utilise un certificat SSL
+      },
+      // TECHNIQUE
+      {
+        cat: "technique",
+        section: "Questions techniques",
+        q: "Le navigateur affiche un avertissement de securite, est-ce normal ?",
+        a: `<p>Oui, c'est tout a fait normal. LibreCDI utilise un certificat SSL
     <strong>auto-signe</strong> pour chiffrer la communication locale.
     Votre navigateur ne reconnait pas ce certificat car il n'est pas emis par une autorite officielle.</p>
     <p>Cliquez sur <strong>"Avance"</strong> puis <strong>"Continuer vers le site"</strong>
     (ou equivalent selon votre navigateur). Vos donnees restent protegees.</p>`
-  },
-  {
-    cat: "technique",
-    section: "Questions techniques",
-    q: "Le logiciel est-il accessible depuis les autres ordinateurs du CDI ?",
-    a: `<p>Oui. L'interface web est accessible depuis <strong>n'importe quel appareil
+      },
+      {
+        cat: "technique",
+        section: "Questions techniques",
+        q: "Le logiciel est-il accessible depuis les autres ordinateurs du CDI ?",
+        a: `<p>Oui. L'interface web est accessible depuis <strong>n'importe quel appareil
     connecte au reseau de l'etablissement</strong> : ordinateurs, tablettes, smartphones.</p>
     <p>Ouvrez votre navigateur et entrez l'adresse affichee dans le panneau de controle
     (ex: <code>https://192.168.1.10:8443</code>).</p>`
-  },
-  {
-    cat: "technique",
-    section: "Questions techniques",
-    q: "Que faire si LibreCDI ne demarre pas ?",
-    a: `<p>Voici les verifications a effectuer dans l'ordre :</p>
+      },
+      {
+        cat: "technique",
+        section: "Questions techniques",
+        q: "Que faire si LibreCDI ne demarre pas ?",
+        a: `<p>Voici les verifications a effectuer dans l'ordre :</p>
     <p>1. Verifiez que PostgreSQL est bien demarre (visible dans les services Windows).</p>
     <p>2. Verifiez que le port 8443 n'est pas bloque par votre antivirus ou pare-feu.</p>
     <p>3. Consultez les logs dans le panneau de controle (onglet Serveur).</p>
     <p>Si le probleme persiste, <a href="report.html">signalez-le</a> en joignant les logs.</p>`
-  },
-  {
-    cat: "technique",
-    section: "Questions techniques",
-    q: "Comment utiliser une douchette code-barres ?",
-    a: `<p>LibreCDI est compatible avec <strong>toutes les douchettes USB</strong>
+      },
+      {
+        cat: "technique",
+        section: "Questions techniques",
+        q: "Comment utiliser une douchette code-barres ?",
+        a: `<p>LibreCDI est compatible avec <strong>toutes les douchettes USB</strong>
     fonctionnant en mode clavier (HID). Branchez simplement la douchette en USB —
     aucun pilote n'est necessaire.</p>
     <p>Placez votre curseur dans le champ de recherche ou de scan,
     puis scannez le code-barres. La douchette envoie le code comme si vous le tapiez au clavier.</p>`
-  },
-  // DONNEES
-  {
-    cat: "donnees",
-    section: "Donnees et securite",
-    q: "Mes donnees sont-elles securisees ?",
-    a: `<p>Oui. Vos donnees restent <strong>sur votre ordinateur</strong> —
+      },
+      // DONNEES
+      {
+        cat: "donnees",
+        section: "Donnees et securite",
+        q: "Mes donnees sont-elles securisees ?",
+        a: `<p>Oui. Vos donnees restent <strong>sur votre ordinateur</strong> —
     elles ne sont jamais envoyees sur un serveur distant sans votre accord.</p>
     <p>Les sauvegardes GitHub sont stockees sur votre propre depot prive,
     accessible uniquement avec votre compte. La connexion entre le logiciel et votre navigateur
     est chiffree (HTTPS).</p>`
-  },
-  {
-    cat: "donnees",
-    section: "Donnees et securite",
-    q: "Que se passe-t-il si mon ordinateur tombe en panne ?",
-    a: `<p>Si vous avez configure la <strong>sauvegarde automatique GitHub</strong>,
+      },
+      {
+        cat: "donnees",
+        section: "Donnees et securite",
+        q: "Que se passe-t-il si mon ordinateur tombe en panne ?",
+        a: `<p>Si vous avez configure la <strong>sauvegarde automatique GitHub</strong>,
     vous pouvez reinstaller LibreCDI sur un autre ordinateur et restaurer toutes vos donnees
     en quelques minutes depuis votre sauvegarde.</p>
     <p>Sans sauvegarde, les donnees sont perdues. C'est pourquoi nous recommandons
     fortement d'activer la sauvegarde automatique des l'installation.</p>
     <p>Consultez le <a href="docs.html#5">Module 5 — Sauvegardes</a> pour configurer cela.</p>`
-  },
-  {
-    cat: "donnees",
-    section: "Donnees et securite",
-    q: "Puis-je exporter mes donnees ?",
-    a: `<p>Oui. LibreCDI propose plusieurs exports :</p>
+      },
+      {
+        cat: "donnees",
+        section: "Donnees et securite",
+        q: "Puis-je exporter mes donnees ?",
+        a: `<p>Oui. LibreCDI propose plusieurs exports :</p>
     <p><strong>CSV</strong> : exportez la liste des livres, eleves ou emprunts depuis l'interface web.</p>
     <p><strong>SQL</strong> : la sauvegarde GitHub est un fichier SQL complet de votre base de donnees,
     ouvert avec n'importe quel outil de base de donnees.</p>
     <p><strong>PDF</strong> : imprimez les listes de retards, les codes-barres et les etiquettes.</p>`
-  },
-];
+      },
+    ];
 
-// Grouper par section
-function groupBySection(items) {
-  const groups = {};
-  items.forEach(item => {
-    if (!groups[item.section]) groups[item.section] = [];
-    groups[item.section].push(item);
-  });
-  return groups;
-}
+    // Grouper par section
+    function groupBySection(items) {
+      const groups = {};
+      items.forEach(item => {
+        if (!groups[item.section]) groups[item.section] = [];
+        groups[item.section].push(item);
+      });
+      return groups;
+    }
 
-function renderFaq(items) {
-  const container = document.getElementById("faqContainer");
-  const noResults = document.getElementById("noResults");
-  if (!items.length) {
-    container.innerHTML = "";
-    noResults.style.display = "block";
-    return;
-  }
-  noResults.style.display = "none";
-  const groups = groupBySection(items);
-  container.innerHTML = Object.entries(groups).map(([section, faqs]) => `
+    function renderFaq(items) {
+      const container = document.getElementById("faqContainer");
+      const noResults = document.getElementById("noResults");
+      if (!items.length) {
+        container.innerHTML = "";
+        noResults.style.display = "block";
+        return;
+      }
+      noResults.style.display = "none";
+      const groups = groupBySection(items);
+      container.innerHTML = Object.entries(groups).map(([section, faqs]) => `
     <div class="faq-section">
       <div class="faq-section-title">${section}</div>
       ${faqs.map((f, i) => {
@@ -394,61 +811,62 @@ function renderFaq(items) {
         </div>`;
       }).join("")}
     </div>`).join("");
-}
+    }
 
-function toggleFaq(id) {
-  const item = document.getElementById(id);
-  const ans  = item.querySelector(".faq-a");
-  const inner = item.querySelector(".faq-a-inner");
-  const isOpen = item.classList.contains("open");
-  // Fermer tous
-  document.querySelectorAll(".faq-item.open").forEach(el => {
-    el.classList.remove("open");
-    el.querySelector(".faq-a").style.maxHeight = "0";
-  });
-  if (!isOpen) {
-    item.classList.add("open");
-    ans.style.maxHeight = inner.scrollHeight + 32 + "px";
-  }
-}
+    function toggleFaq(id) {
+      const item = document.getElementById(id);
+      const ans = item.querySelector(".faq-a");
+      const inner = item.querySelector(".faq-a-inner");
+      const isOpen = item.classList.contains("open");
+      // Fermer tous
+      document.querySelectorAll(".faq-item.open").forEach(el => {
+        el.classList.remove("open");
+        el.querySelector(".faq-a").style.maxHeight = "0";
+      });
+      if (!isOpen) {
+        item.classList.add("open");
+        ans.style.maxHeight = inner.scrollHeight + 32 + "px";
+      }
+    }
 
-let currentCat = "all";
+    let currentCat = "all";
 
-function filterCat(cat, btn) {
-  currentCat = cat;
-  document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  applyFilter();
-}
+    function filterCat(cat, btn) {
+      currentCat = cat;
+      document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      applyFilter();
+    }
 
-function filterFaq(query) {
-  applyFilter(query);
-}
+    function filterFaq(query) {
+      applyFilter(query);
+    }
 
-function applyFilter(query) {
-  const q = (query || document.getElementById("searchInput").value).toLowerCase();
-  let items = FAQ;
-  if (currentCat !== "all") items = items.filter(f => f.cat === currentCat);
-  if (q) items = items.filter(f =>
-    f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q));
-  renderFaq(items);
-}
+    function applyFilter(query) {
+      const q = (query || document.getElementById("searchInput").value).toLowerCase();
+      let items = FAQ;
+      if (currentCat !== "all") items = items.filter(f => f.cat === currentCat);
+      if (q) items = items.filter(f =>
+        f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q));
+      renderFaq(items);
+    }
 
-// Init
-renderFaq(FAQ);
-</script>
-<script>
-function goClient(e){e.preventDefault();window.location.href=RENDER_URL+'/client/login';}
-function toggleMenu(){
-  const n=document.getElementById('mobileNav'),b=document.getElementById('hamburger');
-  const open=n.classList.toggle('open');b.classList.toggle('open',open);
-}
-document.addEventListener('click',function(e){
-  const n=document.getElementById('mobileNav'),b=document.getElementById('hamburger');
-  if(n&&n.classList.contains('open')&&!n.contains(e.target)&&!b.contains(e.target)){
-    n.classList.remove('open');b.classList.remove('open');
-  }
-});
-</script>
+    // Init
+    renderFaq(FAQ);
+  </script>
+  <script>
+    function goClient(e) { e.preventDefault(); window.location.href = RENDER_URL + '/client/login'; }
+    function toggleMenu() {
+      const n = document.getElementById('mobileNav'), b = document.getElementById('hamburger');
+      const open = n.classList.toggle('open'); b.classList.toggle('open', open);
+    }
+    document.addEventListener('click', function (e) {
+      const n = document.getElementById('mobileNav'), b = document.getElementById('hamburger');
+      if (n && n.classList.contains('open') && !n.contains(e.target) && !b.contains(e.target)) {
+        n.classList.remove('open'); b.classList.remove('open');
+      }
+    });
+  </script>
 </body>
+
 </html>

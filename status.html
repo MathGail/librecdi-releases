@@ -1,331 +1,797 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LibreCDI — Status des services</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:#0f0f1a; --surface:#1e1e2e; --surface2:#24273a;
-  --border:#313244; --border2:#45475a;
-  --text:#cdd6f4; --muted:#a6adc8; --faint:#6c7086;
-  --purple:#cba6f7; --blue:#89b4fa; --green:#a6e3a1;
-  --yellow:#f9e2af; --red:#f38ba8;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;
-  border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--purple);}
-.nav-logo span{color:var(--muted);font-weight:400;font-size:13px;margin-left:8px;}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:8px;
-  font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;transition:all 0.2s;
-  border:1px solid var(--border2);background:var(--surface);color:var(--text);
-  font-family:'DM Sans',sans-serif;}
-.btn:hover{background:var(--border2);}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LibreCDI — Status des services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1e1e2e;
+      --surface2: #24273a;
+      --border: #313244;
+      --border2: #45475a;
+      --text: #cdd6f4;
+      --muted: #a6adc8;
+      --faint: #6c7086;
+      --purple: #cba6f7;
+      --blue: #89b4fa;
+      --green: #a6e3a1;
+      --yellow: #f9e2af;
+      --red: #f38ba8;
+    }
 
-main{max-width:800px;margin:0 auto;padding:64px 24px;}
-.page-header{margin-bottom:48px;}
-.page-header h1{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;
-  letter-spacing:-1px;margin-bottom:8px;}
-.page-header p{color:var(--muted);font-size:15px;}
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-.overall-status{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:16px;padding:28px 32px;margin-bottom:32px;
-  display:flex;align-items:center;gap:16px;
-}
-.overall-dot{
-  width:16px;height:16px;border-radius:50%;flex-shrink:0;
-  box-shadow:0 0 12px currentColor;
-}
-.overall-dot.green{background:var(--green);color:var(--green);}
-.overall-dot.yellow{background:var(--yellow);color:var(--yellow);}
-.overall-dot.red{background:var(--red);color:var(--red);}
-.overall-text h2{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;}
-.overall-text p{font-size:13px;color:var(--muted);margin-top:4px;}
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-.services-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:32px;}
-.services-card-title{padding:20px 28px;border-bottom:1px solid var(--border);
-  font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);}
-.service-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px 28px;border-bottom:1px solid var(--border);
-  transition:background 0.15s;
-}
-.service-row:last-child{border:none;}
-.service-row:hover{background:var(--surface2);}
-.service-info{display:flex;flex-direction:column;gap:3px;}
-.service-name{font-size:14px;font-weight:500;}
-.service-sub{font-size:12px;color:var(--faint);}
-.service-right{display:flex;align-items:center;gap:16px;}
-.service-latency{font-size:12px;color:var(--faint);font-family:monospace;}
-.status-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;
-}
-.status-badge .dot{width:6px;height:6px;border-radius:50%;}
-.badge-ok{background:rgba(166,227,161,0.1);color:var(--green);border:1px solid rgba(166,227,161,0.3);}
-.badge-ok .dot{background:var(--green);}
-.badge-warn{background:rgba(249,226,175,0.1);color:var(--yellow);border:1px solid rgba(249,226,175,0.3);}
-.badge-warn .dot{background:var(--yellow);}
-.badge-down{background:rgba(243,139,168,0.1);color:var(--red);border:1px solid rgba(243,139,168,0.3);}
-.badge-down .dot{background:var(--red);}
-.badge-checking{background:rgba(108,112,134,0.2);color:var(--faint);border:1px solid var(--border);}
-.badge-checking .dot{background:var(--faint);}
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      border-bottom: 1px solid var(--border);
+    }
 
-.service-link{color:var(--blue);font-size:12px;text-decoration:none;opacity:0.7;transition:opacity 0.2s;}
-.service-link:hover{opacity:1;}
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--purple);
+    }
 
-/* Releases */
-.releases-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:32px;}
-.release-row{padding:20px 28px;border-bottom:1px solid var(--border);}
-.release-row:last-child{border:none;}
-.release-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.release-tag{font-family:monospace;font-size:13px;color:var(--purple);font-weight:600;}
-.release-date{font-size:12px;color:var(--faint);}
-.release-name{font-size:14px;font-weight:500;margin-bottom:4px;}
-.release-body{font-size:13px;color:var(--muted);line-height:1.5;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.release-assets{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
-.release-asset{
-  font-size:11px;padding:3px 10px;border-radius:6px;
-  background:var(--surface2);border:1px solid var(--border2);color:var(--muted);
-  text-decoration:none;transition:all 0.2s;
-}
-.release-asset:hover{border-color:var(--blue);color:var(--blue);}
+    .nav-logo span {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 13px;
+      margin-left: 8px;
+    }
 
-.last-updated{text-align:center;color:var(--faint);font-size:12px;margin-top:8px;}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+    }
 
-footer{border-top:1px solid var(--border);padding:32px 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  color:var(--faint);font-size:13px;}
-footer a{color:var(--faint);text-decoration:none;}
-footer a:hover{color:var(--muted);}
-.footer-links{display:flex;gap:24px;}
+    .btn:hover {
+      background: var(--border2);
+    }
 
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
-.checking-anim{animation:pulse 1.5s infinite;}
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
 
-@media(max-width:768px){
-  nav{padding:12px 16px;}
-  nav>div{gap:6px;}
-  nav>div .btn:not(:last-child){display:none;}
-  main{padding:32px 16px 56px;}
-  .page-header{margin-bottom:28px;}
-  .page-header h1{font-size:26px;}
-  .page-header p{font-size:14px;}
-  .overall-status{padding:18px 16px;gap:12px;border-radius:12px;}
-  .overall-dot{width:14px;height:14px;}
-  .overall-text h2{font-size:16px;}
-  .overall-text p{font-size:12px;}
-  .services-card-title{padding:12px 16px;font-size:11px;}
-  .service-row{padding:14px 16px;flex-wrap:wrap;gap:8px;}
-  .service-sub{font-size:11px;}
-  .service-right{flex-wrap:wrap;gap:8px;}
-  .service-latency{display:none;}
-  .service-link{display:none;}
-  .status-badge{font-size:11px;padding:4px 10px;}
-  .releases-card{border-radius:12px;}
-  .release-row{padding:16px;}
-  .release-header{flex-wrap:wrap;gap:4px;}
-  .release-name{font-size:13px;}
-  .release-body{font-size:12px;}
-  .release-assets{gap:6px;}
-  .release-asset{font-size:10px;padding:4px 8px;}
-  .last-updated{font-size:11px;margin-top:12px;}
-  footer{flex-direction:column;gap:10px;text-align:center;padding:18px 16px;}
-  .footer-links{justify-content:center;gap:14px;}
-}
-@media(max-width:380px){
-  .overall-text h2{font-size:14px;}
-  .page-header h1{font-size:22px;}
-}
+    .page-header {
+      margin-bottom: 48px;
+    }
 
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
-.hamburger span{display:block;width:22px;height:2px;background:var(--muted,#a6adc8);border-radius:2px;transition:all .3s;}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.hamburger.open span:nth-child(2){opacity:0;}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-.mobile-nav{display:none;position:fixed;top:57px;left:0;right:0;background:rgba(15,15,26,.98);
-  backdrop-filter:blur(16px);border-bottom:1px solid var(--border,#313244);z-index:99;
-  padding:16px;flex-direction:column;gap:4px;}
-.mobile-nav.open{display:flex;}
-.mobile-nav a{padding:12px 16px;color:var(--muted,#a6adc8);text-decoration:none;font-size:14px;border-radius:10px;}
-.mobile-nav a:hover{background:var(--surface,#1e1e2e);color:var(--text,#cdd6f4);}
-@media(max-width:768px){.hamburger{display:flex;}.nav-btns{display:none;}}
-</style>
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .overall-status {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .overall-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    .overall-dot.green {
+      background: var(--green);
+      color: var(--green);
+    }
+
+    .overall-dot.yellow {
+      background: var(--yellow);
+      color: var(--yellow);
+    }
+
+    .overall-dot.red {
+      background: var(--red);
+      color: var(--red);
+    }
+
+    .overall-text h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .overall-text p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .services-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .services-card-title {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .service-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .service-row:last-child {
+      border: none;
+    }
+
+    .service-row:hover {
+      background: var(--surface2);
+    }
+
+    .service-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .service-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .service-sub {
+      font-size: 12px;
+      color: var(--faint);
+    }
+
+    .service-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .service-latency {
+      font-size: 12px;
+      color: var(--faint);
+      font-family: monospace;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .badge-ok {
+      background: rgba(166, 227, 161, 0.1);
+      color: var(--green);
+      border: 1px solid rgba(166, 227, 161, 0.3);
+    }
+
+    .badge-ok .dot {
+      background: var(--green);
+    }
+
+    .badge-warn {
+      background: rgba(249, 226, 175, 0.1);
+      color: var(--yellow);
+      border: 1px solid rgba(249, 226, 175, 0.3);
+    }
+
+    .badge-warn .dot {
+      background: var(--yellow);
+    }
+
+    .badge-down {
+      background: rgba(243, 139, 168, 0.1);
+      color: var(--red);
+      border: 1px solid rgba(243, 139, 168, 0.3);
+    }
+
+    .badge-down .dot {
+      background: var(--red);
+    }
+
+    .badge-checking {
+      background: rgba(108, 112, 134, 0.2);
+      color: var(--faint);
+      border: 1px solid var(--border);
+    }
+
+    .badge-checking .dot {
+      background: var(--faint);
+    }
+
+    .service-link {
+      color: var(--blue);
+      font-size: 12px;
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .service-link:hover {
+      opacity: 1;
+    }
+
+    /* Releases */
+    .releases-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .release-row {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .release-row:last-child {
+      border: none;
+    }
+
+    .release-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .release-tag {
+      font-family: monospace;
+      font-size: 13px;
+      color: var(--purple);
+      font-weight: 600;
+    }
+
+    .release-date {
+      font-size: 12px;
+      color: var(--faint);
+    }
+
+    .release-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .release-body {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .release-assets {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .release-asset {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .release-asset:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .last-updated {
+      text-align: center;
+      color: var(--faint);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--faint);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--faint);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    .checking-anim {
+      animation: pulse 1.5s infinite;
+    }
+
+    @media(max-width:768px) {
+      nav {
+        padding: 12px 16px;
+      }
+
+      nav>div {
+        gap: 6px;
+      }
+
+      nav>div .btn:not(:last-child) {
+        display: none;
+      }
+
+      main {
+        padding: 32px 16px 56px;
+      }
+
+      .page-header {
+        margin-bottom: 28px;
+      }
+
+      .page-header h1 {
+        font-size: 26px;
+      }
+
+      .page-header p {
+        font-size: 14px;
+      }
+
+      .overall-status {
+        padding: 18px 16px;
+        gap: 12px;
+        border-radius: 12px;
+      }
+
+      .overall-dot {
+        width: 14px;
+        height: 14px;
+      }
+
+      .overall-text h2 {
+        font-size: 16px;
+      }
+
+      .overall-text p {
+        font-size: 12px;
+      }
+
+      .services-card-title {
+        padding: 12px 16px;
+        font-size: 11px;
+      }
+
+      .service-row {
+        padding: 14px 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .service-sub {
+        font-size: 11px;
+      }
+
+      .service-right {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .service-latency {
+        display: none;
+      }
+
+      .service-link {
+        display: none;
+      }
+
+      .status-badge {
+        font-size: 11px;
+        padding: 4px 10px;
+      }
+
+      .releases-card {
+        border-radius: 12px;
+      }
+
+      .release-row {
+        padding: 16px;
+      }
+
+      .release-header {
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .release-name {
+        font-size: 13px;
+      }
+
+      .release-body {
+        font-size: 12px;
+      }
+
+      .release-assets {
+        gap: 6px;
+      }
+
+      .release-asset {
+        font-size: 10px;
+        padding: 4px 8px;
+      }
+
+      .last-updated {
+        font-size: 11px;
+        margin-top: 12px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 18px 16px;
+      }
+
+      .footer-links {
+        justify-content: center;
+        gap: 14px;
+      }
+    }
+
+    @media(max-width:380px) {
+      .overall-text h2 {
+        font-size: 14px;
+      }
+
+      .page-header h1 {
+        font-size: 22px;
+      }
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--muted, #a6adc8);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 57px;
+      left: 0;
+      right: 0;
+      background: rgba(15, 15, 26, .98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border, #313244);
+      z-index: 99;
+      padding: 16px;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .mobile-nav.open {
+      display: flex;
+    }
+
+    .mobile-nav a {
+      padding: 12px 16px;
+      color: var(--muted, #a6adc8);
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 10px;
+    }
+
+    .mobile-nav a:hover {
+      background: var(--surface, #1e1e2e);
+      color: var(--text, #cdd6f4);
+    }
+
+    @media(max-width:768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-btns {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- 🔧 CONFIG -->
-<script>const RENDER_URL="https://TON-SERVICE.onrender.com";</script>
-<nav>
-  <a href="index.html" class="nav-logo">LibreCDI <span>v3</span></a>
-  <div style="display:flex;gap:10px">
-    <a href="report.html" class="btn">Signaler un problème</a>
-    <a href="index.html" class="btn">← Retour</a>
-  </div>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
-</nav>
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html">← Accueil</a>
-  <a href="docs.html">Documentation</a>
-  <a href="faq.html">FAQ</a>
-  <a href="status.html">Status</a>
-  <a href="report.html">Support</a>
-  <a href="#" onclick="goClient(event)" style="border:1px solid #45475a;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
-</div>
-
-<main>
-  <div class="page-header">
-    <h1>Status des services</h1>
-    <p>État en temps réel des services LibreCDI — mis à jour automatiquement.</p>
-  </div>
-
-  <!-- Overall -->
-  <div class="overall-status" id="overallCard">
-    <div class="overall-dot checking checking-anim" id="overallDot"></div>
-    <div class="overall-text">
-      <h2 id="overallTitle">Vérification en cours...</h2>
-      <p id="overallSub">Interrogation des services</p>
+  <!-- 🔧 CONFIG -->
+  <script>const RENDER_URL = "https://librecdi-license-server.onrender.com/client/login";</script>
+  <nav>
+    <a href="index.html" class="nav-logo">LibreCDI <span>v3</span></a>
+    <div style="display:flex;gap:10px">
+      <a href="report.html" class="btn">Signaler un problème</a>
+      <a href="index.html" class="btn">← Retour</a>
     </div>
-  </div>
-
-  <!-- Services -->
-  <div class="services-card">
-    <div class="services-card-title">Services</div>
-
-    <div class="service-row">
-      <div class="service-info">
-        <div class="service-name">Serveur de licences</div>
-        <div class="service-sub">librecdi-license-server.onrender.com</div>
-      </div>
-      <div class="service-right">
-        <span class="service-latency" id="lat-license">—</span>
-        <span class="status-badge badge-checking checking-anim" id="badge-license">
-          <span class="dot"></span> Vérification
-        </span>
-      </div>
-    </div>
-
-
-    <div class="service-row">
-      <div class="service-info">
-        <div class="service-name">GitHub Releases</div>
-        <div class="service-sub">MathGail/librecdi-releases</div>
-      </div>
-      <div class="service-right">
-        <span class="service-latency" id="lat-gh">—</span>
-        <a href="https://github.com/MathGail/librecdi-releases/releases" target="_blank" class="service-link">Ouvrir →</a>
-        <span class="status-badge badge-checking checking-anim" id="badge-gh">
-          <span class="dot"></span> Vérification
-        </span>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Releases -->
-  <div class="releases-card" id="releasesCard">
-    <div class="services-card-title">Dernières versions</div>
-    <div id="releasesList">
-      <div style="padding:32px;text-align:center;color:var(--faint);font-size:13px" class="checking-anim">
-        Chargement des releases...
-      </div>
-    </div>
-  </div>
-
-  <div class="last-updated">Dernière mise à jour : <span id="lastUpdated">—</span>
-    &nbsp;·&nbsp; <a href="#" onclick="checkAll();return false" style="color:var(--blue)">Actualiser</a>
-  </div>
-</main>
-
-<footer>
-  <div>
-    <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--purple)">LibreCDI</span>
-    <span style="margin-left:16px">Status Page</span>
-  </div>
-  <div class="footer-links">
-    <a href="index.html">Accueil</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()"
+      aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">← Accueil</a>
+    <a href="docs.html">Documentation</a>
+    <a href="faq.html">FAQ</a>
+    <a href="status.html">Status</a>
     <a href="report.html">Support</a>
+    <a href="#" onclick="goClient(event)"
+      style="border:1px solid #45475a;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
   </div>
-</footer>
 
-<script>
-const LICENSE_SERVER = "https://librecdi-license-server.onrender.com";
-const GH_REPO        = "MathGail/librecdi-releases";
+  <main>
+    <div class="page-header">
+      <h1>Status des services</h1>
+      <p>État en temps réel des services LibreCDI — mis à jour automatiquement.</p>
+    </div>
 
-function setBadge(id, state, label) {
-  const el = document.getElementById(id);
-  el.className = `status-badge badge-${state}`;
-  el.innerHTML = `<span class="dot"></span> ${label}`;
-}
-function setLatency(id, ms) {
-  document.getElementById(id).textContent = ms !== null ? `${ms}ms` : "—";
-}
+    <!-- Overall -->
+    <div class="overall-status" id="overallCard">
+      <div class="overall-dot checking checking-anim" id="overallDot"></div>
+      <div class="overall-text">
+        <h2 id="overallTitle">Vérification en cours...</h2>
+        <p id="overallSub">Interrogation des services</p>
+      </div>
+    </div>
 
-async function checkService(url, timeout=8000) {
-  const start = Date.now();
-  try {
-    const ctrl = new AbortController();
-    const tid  = setTimeout(() => ctrl.abort(), timeout);
-    const r    = await fetch(url, { signal: ctrl.signal, mode: "no-cors" });
-    clearTimeout(tid);
-    return { ok: true, ms: Date.now() - start };
-  } catch(e) {
-    return { ok: false, ms: null };
-  }
-}
+    <!-- Services -->
+    <div class="services-card">
+      <div class="services-card-title">Services</div>
 
-async function checkLicenseServer() {
-  const r = await checkService(LICENSE_SERVER);
-  if (r.ok) {
-    setBadge("badge-license", "ok", "Opérationnel");
-    setLatency("lat-license", r.ms);
-    return true;
-  } else {
-    setBadge("badge-license", "down", "Hors ligne");
-    return false;
-  }
-}
+      <div class="service-row">
+        <div class="service-info">
+          <div class="service-name">Serveur de licences</div>
+          <div class="service-sub">librecdi-license-server.onrender.com</div>
+        </div>
+        <div class="service-right">
+          <span class="service-latency" id="lat-license">—</span>
+          <span class="status-badge badge-checking checking-anim" id="badge-license">
+            <span class="dot"></span> Vérification
+          </span>
+        </div>
+      </div>
 
 
-async function checkGitHub() {
-  const start = Date.now();
-  try {
-    const r = await fetch(`https://api.github.com/repos/${GH_REPO}/releases?per_page=3`);
-    const ms = Date.now() - start;
-    if (r.ok) {
-      setBadge("badge-gh", "ok", "Opérationnel");
-      setLatency("lat-gh", ms);
-      const releases = await r.json();
-      renderReleases(releases);
-      return true;
+      <div class="service-row">
+        <div class="service-info">
+          <div class="service-name">GitHub Releases</div>
+          <div class="service-sub">MathGail/librecdi-releases</div>
+        </div>
+        <div class="service-right">
+          <span class="service-latency" id="lat-gh">—</span>
+          <a href="https://github.com/MathGail/librecdi-releases/releases" target="_blank" class="service-link">Ouvrir
+            →</a>
+          <span class="status-badge badge-checking checking-anim" id="badge-gh">
+            <span class="dot"></span> Vérification
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Releases -->
+    <div class="releases-card" id="releasesCard">
+      <div class="services-card-title">Dernières versions</div>
+      <div id="releasesList">
+        <div style="padding:32px;text-align:center;color:var(--faint);font-size:13px" class="checking-anim">
+          Chargement des releases...
+        </div>
+      </div>
+    </div>
+
+    <div class="last-updated">Dernière mise à jour : <span id="lastUpdated">—</span>
+      &nbsp;·&nbsp; <a href="#" onclick="checkAll();return false" style="color:var(--blue)">Actualiser</a>
+    </div>
+  </main>
+
+  <footer>
+    <div>
+      <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--purple)">LibreCDI</span>
+      <span style="margin-left:16px">Status Page</span>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="report.html">Support</a>
+    </div>
+  </footer>
+
+  <script>
+    const LICENSE_SERVER = "https://librecdi-license-server.onrender.com";
+    const GH_REPO = "MathGail/librecdi-releases";
+
+    function setBadge(id, state, label) {
+      const el = document.getElementById(id);
+      el.className = `status-badge badge-${state}`;
+      el.innerHTML = `<span class="dot"></span> ${label}`;
     }
-    setBadge("badge-gh", "warn", "Dégradé");
-    return false;
-  } catch(e) {
-    setBadge("badge-gh", "down", "Hors ligne");
-    return false;
-  }
-}
+    function setLatency(id, ms) {
+      document.getElementById(id).textContent = ms !== null ? `${ms}ms` : "—";
+    }
 
-function renderReleases(releases) {
-  const container = document.getElementById("releasesList");
-  if (!releases || releases.length === 0) {
-    container.innerHTML = `<div style="padding:24px 28px;color:var(--faint);font-size:13px">Aucune release trouvée</div>`;
-    return;
-  }
-  container.innerHTML = releases.map(r => {
-    const date = new Date(r.published_at).toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" });
-    const assets = (r.assets || []).map(a =>
-      `<a class="release-asset" href="${a.browser_download_url}" target="_blank">⬇ ${a.name}</a>`
-    ).join("");
-    const body = (r.body || "Pas de description").replace(/[#*`]/g, "").trim();
-    return `
+    async function checkService(url, timeout = 8000) {
+      const start = Date.now();
+      try {
+        const ctrl = new AbortController();
+        const tid = setTimeout(() => ctrl.abort(), timeout);
+        const r = await fetch(url, { signal: ctrl.signal, mode: "no-cors" });
+        clearTimeout(tid);
+        return { ok: true, ms: Date.now() - start };
+      } catch (e) {
+        return { ok: false, ms: null };
+      }
+    }
+
+    async function checkLicenseServer() {
+      const r = await checkService(LICENSE_SERVER);
+      if (r.ok) {
+        setBadge("badge-license", "ok", "Opérationnel");
+        setLatency("lat-license", r.ms);
+        return true;
+      } else {
+        setBadge("badge-license", "down", "Hors ligne");
+        return false;
+      }
+    }
+
+
+    async function checkGitHub() {
+      const start = Date.now();
+      try {
+        const r = await fetch(`https://api.github.com/repos/${GH_REPO}/releases?per_page=3`);
+        const ms = Date.now() - start;
+        if (r.ok) {
+          setBadge("badge-gh", "ok", "Opérationnel");
+          setLatency("lat-gh", ms);
+          const releases = await r.json();
+          renderReleases(releases);
+          return true;
+        }
+        setBadge("badge-gh", "warn", "Dégradé");
+        return false;
+      } catch (e) {
+        setBadge("badge-gh", "down", "Hors ligne");
+        return false;
+      }
+    }
+
+    function renderReleases(releases) {
+      const container = document.getElementById("releasesList");
+      if (!releases || releases.length === 0) {
+        container.innerHTML = `<div style="padding:24px 28px;color:var(--faint);font-size:13px">Aucune release trouvée</div>`;
+        return;
+      }
+      container.innerHTML = releases.map(r => {
+        const date = new Date(r.published_at).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+        const assets = (r.assets || []).map(a =>
+          `<a class="release-asset" href="${a.browser_download_url}" target="_blank">⬇ ${a.name}</a>`
+        ).join("");
+        const body = (r.body || "Pas de description").replace(/[#*`]/g, "").trim();
+        return `
     <div class="release-row">
       <div class="release-header">
         <span class="release-tag">${r.tag_name}</span>
@@ -335,61 +801,62 @@ function renderReleases(releases) {
       <div class="release-body">${body}</div>
       ${assets ? `<div class="release-assets">${assets}</div>` : ""}
     </div>`;
-  }).join("");
-}
+      }).join("");
+    }
 
-async function checkAll() {
-  // Reset
-  ["license","gh"].forEach(id => {
-    setBadge("badge-"+id, "checking checking-anim", "Vérification");
-    setLatency("lat-"+id, null);
-  });
-  document.getElementById("overallDot").className = "overall-dot checking checking-anim";
-  document.getElementById("overallTitle").textContent = "Vérification en cours...";
+    async function checkAll() {
+      // Reset
+      ["license", "gh"].forEach(id => {
+        setBadge("badge-" + id, "checking checking-anim", "Vérification");
+        setLatency("lat-" + id, null);
+      });
+      document.getElementById("overallDot").className = "overall-dot checking checking-anim";
+      document.getElementById("overallTitle").textContent = "Vérification en cours...";
 
-  const [licOk, ghOk] = await Promise.all([
-    checkLicenseServer(), checkGitHub()
-  ]);
-  const apiOk = licOk;
+      const [licOk, ghOk] = await Promise.all([
+        checkLicenseServer(), checkGitHub()
+      ]);
+      const apiOk = licOk;
 
-  const allOk = licOk && apiOk && ghOk;
-  const someDown = !licOk || !apiOk;
-  const dot = document.getElementById("overallDot");
-  const title = document.getElementById("overallTitle");
-  const sub   = document.getElementById("overallSub");
+      const allOk = licOk && apiOk && ghOk;
+      const someDown = !licOk || !apiOk;
+      const dot = document.getElementById("overallDot");
+      const title = document.getElementById("overallTitle");
+      const sub = document.getElementById("overallSub");
 
-  if (allOk) {
-    dot.className = "overall-dot green";
-    title.textContent = "Tous les services sont opérationnels";
-    sub.textContent   = "Aucun incident en cours";
-  } else if (someDown) {
-    dot.className = "overall-dot red";
-    title.textContent = "Incident en cours";
-    sub.textContent   = "Un ou plusieurs services sont indisponibles";
-  } else {
-    dot.className = "overall-dot yellow";
-    title.textContent = "Dégradation partielle";
-    sub.textContent   = "Certains services peuvent être lents";
-  }
+      if (allOk) {
+        dot.className = "overall-dot green";
+        title.textContent = "Tous les services sont opérationnels";
+        sub.textContent = "Aucun incident en cours";
+      } else if (someDown) {
+        dot.className = "overall-dot red";
+        title.textContent = "Incident en cours";
+        sub.textContent = "Un ou plusieurs services sont indisponibles";
+      } else {
+        dot.className = "overall-dot yellow";
+        title.textContent = "Dégradation partielle";
+        sub.textContent = "Certains services peuvent être lents";
+      }
 
-  document.getElementById("lastUpdated").textContent =
-    new Date().toLocaleTimeString("fr-FR");
-}
+      document.getElementById("lastUpdated").textContent =
+        new Date().toLocaleTimeString("fr-FR");
+    }
 
-checkAll();
-</script>
-<script>
-function goClient(e){e.preventDefault();window.location.href=RENDER_URL+'/client/login';}
-function toggleMenu(){
-  const n=document.getElementById('mobileNav'),b=document.getElementById('hamburger');
-  const open=n.classList.toggle('open');b.classList.toggle('open',open);
-}
-document.addEventListener('click',function(e){
-  const n=document.getElementById('mobileNav'),b=document.getElementById('hamburger');
-  if(n&&n.classList.contains('open')&&!n.contains(e.target)&&!b.contains(e.target)){
-    n.classList.remove('open');b.classList.remove('open');
-  }
-});
-</script>
+    checkAll();
+  </script>
+  <script>
+    function goClient(e) { e.preventDefault(); window.location.href = RENDER_URL + '/client/login'; }
+    function toggleMenu() {
+      const n = document.getElementById('mobileNav'), b = document.getElementById('hamburger');
+      const open = n.classList.toggle('open'); b.classList.toggle('open', open);
+    }
+    document.addEventListener('click', function (e) {
+      const n = document.getElementById('mobileNav'), b = document.getElementById('hamburger');
+      if (n && n.classList.contains('open') && !n.contains(e.target) && !b.contains(e.target)) {
+        n.classList.remove('open'); b.classList.remove('open');
+      }
+    });
+  </script>
 </body>
+
 </html>

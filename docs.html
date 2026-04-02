@@ -1,192 +1,547 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LibreCDI — Documentation</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#0f0f1a;--surface:#1e1e2e;--surface2:#24273a;--border:#313244;--border2:#45475a;
-  --text:#cdd6f4;--muted:#a6adc8;--faint:#6c7086;--purple:#cba6f7;--blue:#89b4fa;
-  --green:#a6e3a1;--yellow:#f9e2af;}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;
-  border-bottom:1px solid var(--border);background:rgba(15,15,26,0.95);
-  backdrop-filter:blur(12px);z-index:100;flex-shrink:0;}
-.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--purple);text-decoration:none;}
-.nav-logo span{color:var(--muted);font-weight:400;font-size:13px;margin-left:8px;}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;
-  font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;
-  border:1px solid var(--border2);background:var(--surface);color:var(--text);
-  font-family:'DM Sans',sans-serif;transition:all 0.2s;}
-.btn:hover{background:var(--border2);}
-.btn-primary{background:var(--purple);color:#1e1e2e;border-color:var(--purple);}
-.btn-primary:hover{background:#b48ead;}
-.layout{display:grid;grid-template-columns:270px 1fr;flex:1;overflow:hidden;}
-.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:24px 14px;overflow-y:auto;}
-.sidebar-label{font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--faint);
-  text-transform:uppercase;padding:0 10px;margin-bottom:10px;}
-.mod-btn{display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;
-  border-radius:10px;border:none;background:transparent;color:var(--muted);
-  cursor:pointer;text-align:left;transition:all 0.15s;font-family:'DM Sans',sans-serif;font-size:13px;}
-.mod-btn:hover{background:var(--surface2);color:var(--text);}
-.mod-btn.active{background:var(--surface2);color:var(--purple);font-weight:600;
-  border-left:3px solid var(--purple);padding-left:9px;}
-.mod-num{width:24px;height:24px;border-radius:6px;background:var(--border);
-  display:flex;align-items:center;justify-content:center;font-size:10px;
-  font-weight:700;color:var(--faint);flex-shrink:0;}
-.mod-btn.active .mod-num{background:var(--purple);color:#1e1e2e;}
-.main{display:flex;flex-direction:column;overflow:hidden;}
-.doc-header{padding:28px 36px 20px;border-bottom:1px solid var(--border);flex-shrink:0;}
-.doc-header h1{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px;letter-spacing:-0.3px;}
-.doc-header p{color:var(--faint);font-size:13px;}
-.doc-actions{display:flex;gap:10px;margin-top:14px;}
-.pdf-frame{flex:1;border:none;background:var(--bg);width:100%;min-height:0;}
-.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:14px;padding:64px;text-align:center;}
-.empty-icon{font-size:48px;opacity:0.35;}
-.empty h2{font-family:'Syne',sans-serif;font-size:20px;color:var(--muted);}
-.empty p{color:var(--faint);font-size:14px;max-width:400px;line-height:1.6;}
-footer{border-top:1px solid var(--border);padding:20px 48px;
-  display:flex;justify-content:space-between;color:var(--faint);font-size:12px;flex-shrink:0;}
-footer a{color:var(--faint);text-decoration:none;}
-footer a:hover{color:var(--muted);}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LibreCDI — Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1e1e2e;
+      --surface2: #24273a;
+      --border: #313244;
+      --border2: #45475a;
+      --text: #cdd6f4;
+      --muted: #a6adc8;
+      --faint: #6c7086;
+      --purple: #cba6f7;
+      --blue: #89b4fa;
+      --green: #a6e3a1;
+      --yellow: #f9e2af;
+    }
 
-/* Select mobile modules */
-#mobile-mod-sel{display:none;width:100%;padding:11px 14px;background:var(--surface2);
-  border:1px solid var(--border2);border-radius:10px;color:var(--text);
-  font-size:15px;font-family:'DM Sans',sans-serif;cursor:pointer;appearance:auto;}
-#mobile-mod-sel:focus{outline:none;border-color:var(--purple);}
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-@media(max-width:768px){
-  nav{padding:12px 16px;}
-  nav>div{gap:6px;}
-  nav>div .btn:not(:last-child){display:none;}
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-  /* Layout colonne, scroll libre */
-  body{overflow-y:auto;}
-  .layout{display:flex;flex-direction:column;overflow:visible;height:auto;}
-  .sidebar{display:none !important;}
-  #mobile-mod-sel{display:block;}
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15, 15, 26, 0.95);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      flex-shrink: 0;
+    }
 
-  /* Zone principale */
-  .main{overflow:visible;height:auto;}
-  .doc-header{padding:18px 16px 14px;}
-  .doc-header h1{font-size:18px;}
-  .doc-actions{flex-wrap:wrap;gap:8px;}
-  .doc-actions .btn{flex:1;justify-content:center;font-size:12px;padding:8px 10px;}
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--purple);
+      text-decoration: none;
+    }
 
-  /* iFrame PDF utilisable sur mobile */
-  .pdf-frame{height:65vh;min-height:300px;}
+    .nav-logo span {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 13px;
+      margin-left: 8px;
+    }
 
-  .empty{padding:40px 20px;}
-  .empty h2{font-size:17px;}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
 
-  footer{flex-direction:column;gap:10px;text-align:center;padding:18px 16px;}
-  footer>div{justify-content:center;gap:14px;}
-}
+    .btn:hover {
+      background: var(--border2);
+    }
 
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
-.hamburger span{display:block;width:22px;height:2px;background:var(--muted,#a6adc8);border-radius:2px;transition:all .3s;}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.hamburger.open span:nth-child(2){opacity:0;}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-.mobile-nav{display:none;position:fixed;top:57px;left:0;right:0;background:rgba(15,15,26,.98);
-  backdrop-filter:blur(16px);border-bottom:1px solid var(--border,#313244);z-index:99;
-  padding:16px;flex-direction:column;gap:4px;}
-.mobile-nav.open{display:flex;}
-.mobile-nav a{padding:12px 16px;color:var(--muted,#a6adc8);text-decoration:none;font-size:14px;border-radius:10px;}
-.mobile-nav a:hover{background:var(--surface,#1e1e2e);color:var(--text,#cdd6f4);}
-@media(max-width:768px){.hamburger{display:flex;}.nav-btns{display:none;}}
-</style>
+    .btn-primary {
+      background: var(--purple);
+      color: #1e1e2e;
+      border-color: var(--purple);
+    }
+
+    .btn-primary:hover {
+      background: #b48ead;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 24px 14px;
+      overflow-y: auto;
+    }
+
+    .sidebar-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--faint);
+      text-transform: uppercase;
+      padding: 0 10px;
+      margin-bottom: 10px;
+    }
+
+    .mod-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+    }
+
+    .mod-btn:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .mod-btn.active {
+      background: var(--surface2);
+      color: var(--purple);
+      font-weight: 600;
+      border-left: 3px solid var(--purple);
+      padding-left: 9px;
+    }
+
+    .mod-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--faint);
+      flex-shrink: 0;
+    }
+
+    .mod-btn.active .mod-num {
+      background: var(--purple);
+      color: #1e1e2e;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .doc-header {
+      padding: 28px 36px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .doc-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+
+    .doc-header p {
+      color: var(--faint);
+      font-size: 13px;
+    }
+
+    .doc-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .pdf-frame {
+      flex: 1;
+      border: none;
+      background: var(--bg);
+      width: 100%;
+      min-height: 0;
+    }
+
+    .empty {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 64px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      font-size: 48px;
+      opacity: 0.35;
+    }
+
+    .empty h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      color: var(--muted);
+    }
+
+    .empty p {
+      color: var(--faint);
+      font-size: 14px;
+      max-width: 400px;
+      line-height: 1.6;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--faint);
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    footer a {
+      color: var(--faint);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--muted);
+    }
+
+    /* Select mobile modules */
+    #mobile-mod-sel {
+      display: none;
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      appearance: auto;
+    }
+
+    #mobile-mod-sel:focus {
+      outline: none;
+      border-color: var(--purple);
+    }
+
+    @media(max-width:768px) {
+      nav {
+        padding: 12px 16px;
+      }
+
+      nav>div {
+        gap: 6px;
+      }
+
+      nav>div .btn:not(:last-child) {
+        display: none;
+      }
+
+      /* Layout colonne, scroll libre */
+      body {
+        overflow-y: auto;
+      }
+
+      .layout {
+        display: flex;
+        flex-direction: column;
+        overflow: visible;
+        height: auto;
+      }
+
+      .sidebar {
+        display: none !important;
+      }
+
+      #mobile-mod-sel {
+        display: block;
+      }
+
+      /* Zone principale */
+      .main {
+        overflow: visible;
+        height: auto;
+      }
+
+      .doc-header {
+        padding: 18px 16px 14px;
+      }
+
+      .doc-header h1 {
+        font-size: 18px;
+      }
+
+      .doc-actions {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .doc-actions .btn {
+        flex: 1;
+        justify-content: center;
+        font-size: 12px;
+        padding: 8px 10px;
+      }
+
+      /* iFrame PDF utilisable sur mobile */
+      .pdf-frame {
+        height: 65vh;
+        min-height: 300px;
+      }
+
+      .empty {
+        padding: 40px 20px;
+      }
+
+      .empty h2 {
+        font-size: 17px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 18px 16px;
+      }
+
+      footer>div {
+        justify-content: center;
+        gap: 14px;
+      }
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--muted, #a6adc8);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 57px;
+      left: 0;
+      right: 0;
+      background: rgba(15, 15, 26, .98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border, #313244);
+      z-index: 99;
+      padding: 16px;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .mobile-nav.open {
+      display: flex;
+    }
+
+    .mobile-nav a {
+      padding: 12px 16px;
+      color: var(--muted, #a6adc8);
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 10px;
+    }
+
+    .mobile-nav a:hover {
+      background: var(--surface, #1e1e2e);
+      color: var(--text, #cdd6f4);
+    }
+
+    @media(max-width:768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-btns {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<!-- 🔧 CONFIG -->
-<script>const RENDER_URL="https://TON-SERVICE.onrender.com";</script>
-<nav>
-  <a href="index.html" class="nav-logo">LibreCDI <span>Documentation</span></a>
-  <div style="display:flex;gap:10px">
-    <a href="faq.html" class="btn">FAQ</a>
-    <a href="index.html" class="btn">← Accueil</a>
-  </div>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
-</nav>
-<div class="mobile-nav" id="mobileNav">
-  <a href="index.html">← Accueil</a>
-  <a href="docs.html">Documentation</a>
-  <a href="faq.html">FAQ</a>
-  <a href="status.html">Status</a>
-  <a href="report.html">Support</a>
-  <a href="#" onclick="goClient(event)" style="border:1px solid #45475a;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
-</div>
-
-<select id="mobile-mod-sel" onchange="if(this.value!=='')openModule(+this.value)"><option value="">📖 Choisir un module…</option></select>
-<div class="layout">
-  <aside class="sidebar">
-    <div class="sidebar-label">Modules</div>
-    <div id="moduleList"></div>
-  </aside>
-
-  <main class="main" id="mainArea">
-    <div class="empty">
-      <div class="empty-icon">📖</div>
-      <h2>Bienvenue dans la documentation</h2>
-      <p>Selectionnez un module dans la liste a gauche pour commencer la lecture.</p>
+  <!-- 🔧 CONFIG -->
+  <script>const RENDER_URL = "https://librecdi-license-server.onrender.com/client/login";</script>
+  <nav>
+    <a href="index.html" class="nav-logo">LibreCDI <span>Documentation</span></a>
+    <div style="display:flex;gap:10px">
+      <a href="faq.html" class="btn">FAQ</a>
+      <a href="index.html" class="btn">← Accueil</a>
     </div>
-  </main>
-</div>
-
-<footer>
-  <span>LibreCDI v3 — Documentation officielle</span>
-  <div style="display:flex;gap:20px">
-    <a href="index.html">Accueil</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()"
+      aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">← Accueil</a>
+    <a href="docs.html">Documentation</a>
     <a href="faq.html">FAQ</a>
+    <a href="status.html">Status</a>
     <a href="report.html">Support</a>
+    <a href="#" onclick="goClient(event)"
+      style="border:1px solid #45475a;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
   </div>
-</footer>
 
-<script>
-// ── Liste des modules ─────────────────────────────────────────────
-// Pour ajouter un module : ajoutez le PDF dans docs/ et une entree ici.
-// Aucun autre changement de code necessaire.
-const MODULES = [
-  { num:1, file:"docs/01-installation-configuration.pdf",
-    title:"Installation et Configuration",
-    desc:"Installer LibreCDI, activer votre licence et configurer le logiciel." },
-  { num:2, file:"docs/02-gestion-livres-isbn.pdf",
-    title:"Gestion des Livres",
-    desc:"Ajouter des livres par ISBN, gerer le catalogue et les codes-barres." },
-  { num:3, file:"docs/03-gestion-eleves.pdf",
-    title:"Gestion des Eleves",
-    desc:"Creer les fiches eleves, gerer les classes et les incidents." },
-  { num:4, file:"docs/04-emprunts-retours.pdf",
-    title:"Emprunts et Retours",
-    desc:"Enregistrer les emprunts, retours et suivre les retards." },
-  { num:5, file:"docs/05-sauvegardes-restauration.pdf",
-    title:"Sauvegardes et Restauration",
-    desc:"Configurer GitHub, sauvegarder et restaurer vos donnees." },
-  { num:6, file:"docs/06-mises-a-jour-maintenance.pdf",
-    title:"Mises a jour et Maintenance",
-    desc:"Mettre a jour LibreCDI et effectuer la maintenance courante." },
-];
+  <select id="mobile-mod-sel" onchange="if(this.value!=='')openModule(+this.value)">
+    <option value="">📖 Choisir un module…</option>
+  </select>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-label">Modules</div>
+      <div id="moduleList"></div>
+    </aside>
 
-function buildSidebar() {
-  const sel = document.getElementById("mobile-mod-sel");
-  MODULES.forEach((m,i)=>{ const o=document.createElement("option"); o.value=i; o.textContent=m.num+". "+m.title; sel.appendChild(o); });
-  document.getElementById("moduleList").innerHTML = MODULES.map((m, i) => `
+    <main class="main" id="mainArea">
+      <div class="empty">
+        <div class="empty-icon">📖</div>
+        <h2>Bienvenue dans la documentation</h2>
+        <p>Selectionnez un module dans la liste a gauche pour commencer la lecture.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <span>LibreCDI v3 — Documentation officielle</span>
+    <div style="display:flex;gap:20px">
+      <a href="index.html">Accueil</a>
+      <a href="faq.html">FAQ</a>
+      <a href="report.html">Support</a>
+    </div>
+  </footer>
+
+  <script>
+    // ── Liste des modules ─────────────────────────────────────────────
+    // Pour ajouter un module : ajoutez le PDF dans docs/ et une entree ici.
+    // Aucun autre changement de code necessaire.
+    const MODULES = [
+      {
+        num: 1, file: "docs/01-installation-configuration.pdf",
+        title: "Installation et Configuration",
+        desc: "Installer LibreCDI, activer votre licence et configurer le logiciel."
+      },
+      {
+        num: 2, file: "docs/02-gestion-livres-isbn.pdf",
+        title: "Gestion des Livres",
+        desc: "Ajouter des livres par ISBN, gerer le catalogue et les codes-barres."
+      },
+      {
+        num: 3, file: "docs/03-gestion-eleves.pdf",
+        title: "Gestion des Eleves",
+        desc: "Creer les fiches eleves, gerer les classes et les incidents."
+      },
+      {
+        num: 4, file: "docs/04-emprunts-retours.pdf",
+        title: "Emprunts et Retours",
+        desc: "Enregistrer les emprunts, retours et suivre les retards."
+      },
+      {
+        num: 5, file: "docs/05-sauvegardes-restauration.pdf",
+        title: "Sauvegardes et Restauration",
+        desc: "Configurer GitHub, sauvegarder et restaurer vos donnees."
+      },
+      {
+        num: 6, file: "docs/06-mises-a-jour-maintenance.pdf",
+        title: "Mises a jour et Maintenance",
+        desc: "Mettre a jour LibreCDI et effectuer la maintenance courante."
+      },
+    ];
+
+    function buildSidebar() {
+      const sel = document.getElementById("mobile-mod-sel");
+      MODULES.forEach((m, i) => { const o = document.createElement("option"); o.value = i; o.textContent = m.num + ". " + m.title; sel.appendChild(o); });
+      document.getElementById("moduleList").innerHTML = MODULES.map((m, i) => `
     <button class="mod-btn" id="btn-${i}" onclick="openModule(${i})">
       <div class="mod-num">${m.num}</div>
       <span>${m.title}</span>
     </button>`).join("");
-}
+    }
 
-function openModule(idx) {
-  const m = MODULES[idx];
-  document.querySelectorAll(".mod-btn").forEach((b,i) => b.classList.toggle("active", i===idx));
-  const sel=document.getElementById("mobile-mod-sel"); if(sel) sel.value=idx;
-  document.getElementById("mainArea").innerHTML = `
+    function openModule(idx) {
+      const m = MODULES[idx];
+      document.querySelectorAll(".mod-btn").forEach((b, i) => b.classList.toggle("active", i === idx));
+      const sel = document.getElementById("mobile-mod-sel"); if (sel) sel.value = idx;
+      document.getElementById("mainArea").innerHTML = `
     <div class="doc-header">
       <div style="margin-bottom:8px">
         <span style="background:var(--surface2);border:1px solid var(--border2);color:var(--faint);
@@ -202,25 +557,26 @@ function openModule(idx) {
       </div>
     </div>
     <iframe id="pf" class="pdf-frame" src="${m.file}#toolbar=1&navpanes=0" title="${m.title}"></iframe>`;
-  history.replaceState(null, "", "#" + m.num);
-}
+      history.replaceState(null, "", "#" + m.num);
+    }
 
-buildSidebar();
-const hash = parseInt(location.hash.replace("#","")) - 1;
-if (hash >= 0 && hash < MODULES.length) openModule(hash);
-</script>
-<script>
-function goClient(e){e.preventDefault();window.location.href=RENDER_URL+'/client/login';}
-function toggleMenu(){
-  const n=document.getElementById('mobileNav'),b=document.getElementById('hamburger');
-  const open=n.classList.toggle('open');b.classList.toggle('open',open);
-}
-document.addEventListener('click',function(e){
-  const n=document.getElementById('mobileNav'),b=document.getElementById('hamburger');
-  if(n&&n.classList.contains('open')&&!n.contains(e.target)&&!b.contains(e.target)){
-    n.classList.remove('open');b.classList.remove('open');
-  }
-});
-</script>
+    buildSidebar();
+    const hash = parseInt(location.hash.replace("#", "")) - 1;
+    if (hash >= 0 && hash < MODULES.length) openModule(hash);
+  </script>
+  <script>
+    function goClient(e) { e.preventDefault(); window.location.href = RENDER_URL + '/client/login'; }
+    function toggleMenu() {
+      const n = document.getElementById('mobileNav'), b = document.getElementById('hamburger');
+      const open = n.classList.toggle('open'); b.classList.toggle('open', open);
+    }
+    document.addEventListener('click', function (e) {
+      const n = document.getElementById('mobileNav'), b = document.getElementById('hamburger');
+      if (n && n.classList.contains('open') && !n.contains(e.target) && !b.contains(e.target)) {
+        n.classList.remove('open'); b.classList.remove('open');
+      }
+    });
+  </script>
 </body>
+
 </html>

@@ -976,7 +976,7 @@
             <div
               style="font-size:12px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em">
               Email</div>
-            <div style="color:var(--blue)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d8b5b9acb0b1bdadf6bfb9b1b4b4b9aabcb1b698bfb5b9b1b4f6bbb7b5">[email&#160;protected]</a></div>
+            <div style="color:var(--blue)"><a href="mailto:mathieu.gaillardin@gmail.com" style="color:var(--blue)">mathieu.gaillardin@gmail.com</a></div>
           </div>
           <div>
             <div
@@ -1031,7 +1031,7 @@
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // Reveal on scroll
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
@@ -1069,7 +1069,15 @@
         } else {
           throw new Error('Erreur serveur');
         }
-      } catch (err) {
+      } catch(err) {
         msg.style.display = 'block';
         msg.style.color = 'var(--red)';
-    
+        msg.textContent = "Erreur lors de l'envoi. Reessayez ou ecrivez a mathieu.gaillardin@gmail.com";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Envoyer le message';
+      }
+    }
+  </script>
+</body>
+</html>

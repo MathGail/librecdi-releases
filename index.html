@@ -983,7 +983,7 @@
     <p>LibreCDI est un logiciel de gestion de bibliothèque scolaire simple, rapide et pensé pour les professeurs
       documentalistes.</p>
     <div class="hero-actions">
-      <a href="#tarifs" class="btn btn-primary">Obtenir une licence — dès 50 €/an</a>
+      <a href="#tarifs" class="btn btn-primary">Obtenir LibreCDI Pro — 149 €/an</a>
       <a href="#fonctionnement" class="btn btn-outline-blue">Voir comment ça marche</a>
     </div>
     <div class="hero-scroll">
@@ -1100,7 +1100,7 @@
         <div class="step-num">01</div>
         <div class="step-body">
           <h3>Vous achetez une licence</h3>
-          <p>Paiement sécurisé via Gumroad. Votre clé de licence est envoyée par email immédiatement après l'achat.</p>
+          <p>Paiement sécurisé via Stripe. Votre clé de licence est envoyée par email immédiatement après l'achat.</p>
         </div>
       </div>
       <div class="step">
@@ -1133,42 +1133,145 @@
   <section class="section" id="tarifs" style="border-top:1px solid var(--border)">
     <div class="section-label reveal">Tarifs</div>
     <div class="section-title reveal">Simple et transparent</div>
-    <div class="section-sub reveal">Une licence par établissement, valable 1 an, renouvelable.</div>
+    <div class="section-sub reveal">Commencez gratuitement, passez à Pro quand vous êtes prêt.</div>
 
-    <div class="pricing-grid reveal"
-      style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));max-width:800px;margin:0 auto">
-      <div class="pricing-card featured">
-        <div class="pricing-badge">Licence standard</div>
-        <div class="pricing-name">Licence annuelle</div>
-        <div class="pricing-price">50 € <span>/ an</span></div>
-        <div class="pricing-desc">Pour un CDI — 1 établissement</div>
+    <!-- Cartes Free + Pro -->
+    <div class="pricing-grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));max-width:900px;margin:0 auto 64px">
+
+      <!-- FREE -->
+      <div class="pricing-card">
+        <div class="pricing-name">Version Gratuite</div>
+        <div class="pricing-price" style="color:var(--green);font-size:36px">0 € <span>/ toujours</span></div>
+        <div class="pricing-desc">Pour découvrir LibreCDI sans engagement</div>
         <ul class="pricing-features">
-          <li>Toutes les fonctionnalités incluses</li>
-          <li>Mises à jour automatiques pendant 1 an</li>
-          <li>Accessible depuis tout le réseau de l'établissement</li>
+          <li>Jusqu'à 50 livres</li>
+          <li>Jusqu'à 15 élèves</li>
+          <li>5 emprunts simultanés max</li>
+          <li>Interface web complète</li>
+          <li>Recherche ISBN automatique</li>
+          <li>Export JSON vers Pro</li>
+        </ul>
+        <a href="LibreCDI_Free_Setup.exe" download class="btn" style="width:100%;justify-content:center;gap:8px">
+          ⬇ Télécharger gratuitement
+        </a>
+      </div>
+
+      <!-- PRO -->
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Recommandé</div>
+        <div class="pricing-name">LibreCDI Pro</div>
+        <div class="pricing-price">149 € <span>/ an</span></div>
+        <div class="pricing-desc">Pour un CDI — 1 établissement, toutes les fonctionnalités</div>
+        <ul class="pricing-features">
+          <li>Livres, élèves &amp; emprunts <strong style="color:var(--text)">illimités</strong></li>
+          <li>Codes-barres CDI (génération &amp; impression)</li>
+          <li>Statistiques avancées &amp; graphiques</li>
+          <li>Suivi des incidents élèves</li>
           <li>Sauvegarde automatique GitHub</li>
-          <li>Support par email sous 24h</li>
-          <li>Résiliable à tout moment</li>
+          <li>Mises à jour automatiques 1 an</li>
+          <li>Support email prioritaire sous 24h</li>
         </ul>
         <a href="https://buy.stripe.com/test_6oU3cveZTaxd0AR8MG0Ba00" target="_blank" class="btn btn-primary"
           style="width:100%;justify-content:center">
-          Acheter — 50 € / an
+          Acheter — 149 € / an
         </a>
       </div>
+
+      <!-- DEVIS -->
       <div class="pricing-card">
-        <div class="pricing-name">Devis établissement</div>
-        <div class="pricing-price" style="font-size:28px;padding-top:8px">Sur devis</div>
+        <div class="pricing-name">Multi-établissements</div>
+        <div class="pricing-price" style="font-size:26px;padding-top:8px">Sur devis</div>
         <div class="pricing-desc">Réseau d'établissements, déploiement multiple</div>
         <ul class="pricing-features">
-          <li>Toutes les fonctionnalités incluses</li>
+          <li>Toutes les fonctionnalités Pro</li>
           <li>Plusieurs établissements</li>
-          <li>Installation et configuration à distance</li>
+          <li>Installation &amp; configuration à distance</li>
           <li>Support dédié et prioritaire</li>
           <li>Facturation établissement ou collectivité</li>
         </ul>
         <a href="#contact" class="btn" style="width:100%;justify-content:center">
           Nous contacter
         </a>
+      </div>
+    </div>
+
+    <!-- Tableau comparatif -->
+    <div class="reveal" style="max-width:760px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:32px">
+        <div class="section-label" style="margin-bottom:8px">Comparatif</div>
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px">Free vs Pro — ce qui change</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden">
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <thead>
+            <tr style="background:var(--surface2);border-bottom:1px solid var(--border)">
+              <th style="text-align:left;padding:14px 20px;color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.06em">Fonctionnalité</th>
+              <th style="text-align:center;padding:14px 20px;color:var(--green);font-weight:700;font-size:13px;width:130px">Gratuit</th>
+              <th style="text-align:center;padding:14px 20px;color:var(--purple);font-weight:700;font-size:13px;width:130px">Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:13px 20px;color:var(--muted)">Nombre de livres</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--yellow);font-weight:600">50 max</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--green);font-weight:700">∞ Illimité</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:13px 20px;color:var(--muted)">Nombre d'élèves</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--yellow);font-weight:600">15 max</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--green);font-weight:700">∞ Illimité</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:13px 20px;color:var(--muted)">Emprunts simultanés</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--yellow);font-weight:600">5 max</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--green);font-weight:700">∞ Illimité</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:13px 20px;color:var(--muted)">Interface web & gestion de base</td>
+              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
+              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:13px 20px;color:var(--muted)">Recherche ISBN automatique</td>
+              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
+              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:13px 20px;color:var(--muted)">Codes-barres CDI</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
+              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:13px 20px;color:var(--muted)">Statistiques & graphiques avancés</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
+              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:13px 20px;color:var(--muted)">Suivi des incidents élèves</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
+              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:13px 20px;color:var(--muted)">Sauvegarde automatique GitHub</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
+              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+              <td style="padding:13px 20px;color:var(--muted)">Mises à jour automatiques</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
+              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
+            </tr>
+            <tr>
+              <td style="padding:13px 20px;color:var(--muted)">Support email prioritaire</td>
+              <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
+              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:24px;justify-content:center;flex-wrap:wrap">
+        <a href="LibreCDI_Free_Setup.exe" download class="btn" style="gap:8px">⬇ Télécharger la version gratuite</a>
+        <a href="https://buy.stripe.com/test_6oU3cveZTaxd0AR8MG0Ba00" target="_blank" class="btn btn-primary" style="gap:8px">✨ Passer à Pro — 149 €/an</a>
       </div>
     </div>
   </section>

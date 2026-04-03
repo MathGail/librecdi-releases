@@ -767,6 +767,11 @@
       text-align: center;
     }
 
+    @media (max-width: 960px) {
+      .pricing-grid {
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
     @media (max-width: 768px) {
 
       /* Nav : logo + CTA seulement */
@@ -1071,11 +1076,7 @@
         <h3>Tableau de bord</h3>
         <p>KPIs en temps réel, graphiques d'activité, vue d'ensemble du CDI en un coup d'œil.</p>
       </div>
-      <div class="feature-card reveal" style="--accent:var(--red)">
-        <div class="feature-icon">🔒</div>
-        <h3>Sauvegarde automatique</h3>
-        <p>Backup quotidien sur GitHub, restauration en un clic, 7 dernières sauvegardes conservées.</p>
-      </div>
+
       <div class="feature-card reveal" style="--accent:var(--purple)">
         <div class="feature-icon">🏷️</div>
         <h3>Codes-barres</h3>
@@ -1136,7 +1137,7 @@
     <div class="section-sub reveal">Commencez gratuitement, passez à Pro quand vous êtes prêt.</div>
 
     <!-- Cartes Free + Pro -->
-    <div class="pricing-grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));max-width:900px;margin:0 auto 64px">
+    <div class="pricing-grid reveal" style="grid-template-columns:repeat(3,1fr);max-width:1100px;margin:0 auto 64px;align-items:start">
 
       <!-- FREE -->
       <div class="pricing-card">
@@ -1167,7 +1168,6 @@
           <li>Codes-barres CDI (génération &amp; impression)</li>
           <li>Statistiques avancées &amp; graphiques</li>
           <li>Suivi des incidents élèves</li>
-          <li>Sauvegarde automatique GitHub</li>
           <li>Mises à jour automatiques 1 an</li>
           <li>Support email prioritaire sous 24h</li>
         </ul>
@@ -1248,11 +1248,6 @@
             </tr>
             <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
               <td style="padding:13px 20px;color:var(--muted)">Suivi des incidents élèves</td>
-              <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
-              <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border)">
-              <td style="padding:13px 20px;color:var(--muted)">Sauvegarde automatique GitHub</td>
               <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
               <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
             </tr>

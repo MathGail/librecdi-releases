@@ -11,21 +11,49 @@
     rel="stylesheet">
   <style>
     :root {
-      --bg: #0f0f1a;
-      --surface: #1e1e2e;
-      --surface2: #24273a;
-      --border: #313244;
-      --border2: #45475a;
-      --text: #cdd6f4;
-      --muted: #a6adc8;
-      --faint: #6c7086;
-      --purple: #cba6f7;
-      --blue: #89b4fa;
-      --green: #a6e3a1;
-      --yellow: #f9e2af;
-      --red: #f38ba8;
-      --teal: #94e2d5;
+      --bg: #eff1f5;
+      --surface: #e6e9ef;
+      --surface2: #dce0e8;
+      --border: #ccd0da;
+      --border2: #bcc0cc;
+      --text: #4c4f69;
+      --muted: #6c6f85;
+      --faint: #8c8fa1;
+      --purple: #8839ef;
+      --blue: #1e66f5;
+      --green: #40a02b;
+      --yellow: #df8e1d;
+      --red: #d20f39;
+      --teal: #179299;
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f1a;
+        --surface: #1e1e2e;
+        --surface2: #24273a;
+        --border: #313244;
+        --border2: #45475a;
+        --text: #cdd6f4;
+        --muted: #a6adc8;
+        --faint: #6c7086;
+        --purple: #cba6f7;
+        --blue: #89b4fa;
+        --green: #a6e3a1;
+        --yellow: #f9e2af;
+        --red: #f38ba8;
+        --teal: #94e2d5;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      nav {
+        background: rgba(15, 15, 26, 0.85) !important;
+      }
+      .mobile-nav {
+        background: rgba(15, 15, 26, 0.98) !important;
+      }
+    }
+
 
     *,
     *::before,
@@ -58,7 +86,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 16px 48px;
-      background: rgba(15, 15, 26, 0.85);
+      background: rgba(239, 241, 245, 0.88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
@@ -127,8 +155,8 @@
     }
 
     .btn-primary:hover {
-      background: #b48ead;
-      border-color: #b48ead;
+      background: #7287fd;
+      border-color: #7287fd;
     }
 
     .btn-outline-blue {
@@ -159,8 +187,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 60% 40% at 50% 20%, rgba(203, 166, 247, 0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 30% at 20% 70%, rgba(137, 180, 250, 0.05) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 40% at 50% 20%, rgba(136, 57, 239, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 20% 70%, rgba(30, 102, 245, 0.04) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -351,7 +379,7 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 32px 80px rgba(76, 79, 105, 0.15);
       margin-top: 48px;
     }
 
@@ -398,7 +426,7 @@
       bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(15, 15, 26, 0.85);
+      background: rgba(239, 241, 245, 0.88);
       backdrop-filter: blur(8px);
       color: var(--muted);
       font-size: 12px;
@@ -518,7 +546,7 @@
 
     .pricing-card.featured {
       border-color: var(--purple);
-      background: linear-gradient(135deg, var(--surface) 0%, rgba(203, 166, 247, 0.05) 100%);
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(136, 57, 239, 0.05) 100%);
     }
 
     .pricing-badge {
@@ -726,7 +754,7 @@
       top: 57px;
       left: 0;
       right: 0;
-      background: rgba(15, 15, 26, 0.98);
+      background: rgba(239, 241, 245, 0.98);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
       z-index: 99;
@@ -755,7 +783,7 @@
 
     .mobile-nav .m-cta {
       background: var(--purple);
-      color: #1e1e2e !important;
+      color: #ffffff !important;
       font-weight: 700;
       text-align: center;
       margin-top: 8px;
@@ -937,6 +965,26 @@
         padding: 7px 10px;
       }
     }
+
+    @media (prefers-color-scheme: dark) {
+      .hero::before {
+        background:
+          radial-gradient(ellipse 60% 40% at 50% 20%, rgba(203, 166, 247, 0.08) 0%, transparent 70%),
+          radial-gradient(ellipse 40% 30% at 20% 70%, rgba(137, 180, 250, 0.05) 0%, transparent 60%);
+      }
+      .mockup-window {
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
+      }
+      .feature-card {
+        background: linear-gradient(135deg, var(--surface) 0%, rgba(203, 166, 247, 0.05) 100%);
+      }
+      .demo-bar-content {
+        background: #181825;
+      }
+      table tr:nth-child(even) {
+        background: rgba(255,255,255,0.015);
+      }
+    }
   </style>
 </head>
 
@@ -1004,12 +1052,12 @@
       <div class="section-title">Conçu pour être utilisé<br>au quotidien</div>
       <div class="mockup-frame">
         <div class="mockup-bar">
-          <div class="mockup-dot" style="background:#f38ba8"></div>
-          <div class="mockup-dot" style="background:#f9e2af"></div>
-          <div class="mockup-dot" style="background:#a6e3a1"></div>
+          <div class="mockup-dot" style="background:#d20f39"></div>
+          <div class="mockup-dot" style="background:#df8e1d"></div>
+          <div class="mockup-dot" style="background:#40a02b"></div>
           <div
-            style="flex:1;background:#181825;border-radius:4px;height:22px;margin-left:8px;display:flex;align-items:center;padding:0 12px">
-            <span style="color:#6c7086;font-size:11px">https://localhost:8443</span>
+            style="flex:1;background:var(--surface2);border-radius:4px;height:22px;margin-left:8px;display:flex;align-items:center;padding:0 12px">
+            <span style="color:#8c8fa1;font-size:11px">https://localhost:8443</span>
           </div>
         </div>
         <div class="mockup-content" id="mockupArea">
@@ -1216,7 +1264,7 @@
               <td style="text-align:center;padding:13px 20px;color:var(--yellow);font-weight:600">50 max</td>
               <td style="text-align:center;padding:13px 20px;color:var(--green);font-weight:700">∞ Illimité</td>
             </tr>
-            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+            <tr style="border-bottom:1px solid var(--border);background:rgba(0,0,0,0.03)">
               <td style="padding:13px 20px;color:var(--muted)">Nombre d'élèves</td>
               <td style="text-align:center;padding:13px 20px;color:var(--yellow);font-weight:600">15 max</td>
               <td style="text-align:center;padding:13px 20px;color:var(--green);font-weight:700">∞ Illimité</td>
@@ -1226,7 +1274,7 @@
               <td style="text-align:center;padding:13px 20px;color:var(--yellow);font-weight:600">5 max</td>
               <td style="text-align:center;padding:13px 20px;color:var(--green);font-weight:700">∞ Illimité</td>
             </tr>
-            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+            <tr style="border-bottom:1px solid var(--border);background:rgba(0,0,0,0.03)">
               <td style="padding:13px 20px;color:var(--muted)">Interface web & gestion de base</td>
               <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
               <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
@@ -1236,7 +1284,7 @@
               <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
               <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
             </tr>
-            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+            <tr style="border-bottom:1px solid var(--border);background:rgba(0,0,0,0.03)">
               <td style="padding:13px 20px;color:var(--muted)">Codes-barres CDI</td>
               <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
               <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
@@ -1246,12 +1294,12 @@
               <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
               <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
             </tr>
-            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+            <tr style="border-bottom:1px solid var(--border);background:rgba(0,0,0,0.03)">
               <td style="padding:13px 20px;color:var(--muted)">Suivi des incidents élèves</td>
               <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
               <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>
             </tr>
-            <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.015)">
+            <tr style="border-bottom:1px solid var(--border);background:rgba(0,0,0,0.03)">
               <td style="padding:13px 20px;color:var(--muted)">Mises à jour automatiques</td>
               <td style="text-align:center;padding:13px 20px;color:var(--faint);font-size:16px">—</td>
               <td style="text-align:center;padding:13px 20px;font-size:16px">✅</td>

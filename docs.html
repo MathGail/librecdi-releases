@@ -11,19 +11,46 @@
     rel="stylesheet">
   <style>
     :root {
-      --bg: #0f0f1a;
-      --surface: #1e1e2e;
-      --surface2: #24273a;
-      --border: #313244;
-      --border2: #45475a;
-      --text: #cdd6f4;
-      --muted: #a6adc8;
-      --faint: #6c7086;
-      --purple: #cba6f7;
-      --blue: #89b4fa;
-      --green: #a6e3a1;
-      --yellow: #f9e2af;
+      --bg: #eff1f5;
+      --surface: #e6e9ef;
+      --surface2: #dce0e8;
+      --border: #ccd0da;
+      --border2: #bcc0cc;
+      --text: #4c4f69;
+      --muted: #6c6f85;
+      --faint: #8c8fa1;
+      --purple: #8839ef;
+      --blue: #1e66f5;
+      --green: #40a02b;
+      --yellow: #df8e1d;
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f1a;
+        --surface: #1e1e2e;
+        --surface2: #24273a;
+        --border: #313244;
+        --border2: #45475a;
+        --text: #cdd6f4;
+        --muted: #a6adc8;
+        --faint: #6c7086;
+        --purple: #cba6f7;
+        --blue: #89b4fa;
+        --green: #a6e3a1;
+        --yellow: #f9e2af;
+        --red: #f38ba8;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      nav {
+        background: rgba(15, 15, 26, 0.85) !important;
+      }
+      .mobile-nav {
+        background: rgba(15, 15, 26, 0.98) !important;
+      }
+    }
+
 
     *,
     *::before,
@@ -92,12 +119,12 @@
 
     .btn-primary {
       background: var(--purple);
-      color: #1e1e2e;
+      color: #e6e9ef;
       border-color: var(--purple);
     }
 
     .btn-primary:hover {
-      background: #b48ead;
+      background: #7287fd;
     }
 
     .layout {
@@ -170,7 +197,7 @@
 
     .mod-btn.active .mod-num {
       background: var(--purple);
-      color: #1e1e2e;
+      color: #e6e9ef;
     }
 
     .main {
@@ -380,7 +407,7 @@
       display: block;
       width: 22px;
       height: 2px;
-      background: var(--muted, #a6adc8);
+      background: var(--muted, #6c6f85);
       border-radius: 2px;
       transition: all .3s;
     }
@@ -405,7 +432,7 @@
       right: 0;
       background: rgba(15, 15, 26, .98);
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border, #313244);
+      border-bottom: 1px solid var(--border, #ccd0da);
       z-index: 99;
       padding: 16px;
       flex-direction: column;
@@ -418,15 +445,15 @@
 
     .mobile-nav a {
       padding: 12px 16px;
-      color: var(--muted, #a6adc8);
+      color: var(--muted, #6c6f85);
       text-decoration: none;
       font-size: 14px;
       border-radius: 10px;
     }
 
     .mobile-nav a:hover {
-      background: var(--surface, #1e1e2e);
-      color: var(--text, #cdd6f4);
+      background: var(--surface, #e6e9ef);
+      color: var(--text, #4c4f69);
     }
 
     @media(max-width:768px) {
@@ -436,6 +463,14 @@
 
       .nav-btns {
         display: none;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .hero::before {
+        background:
+          radial-gradient(ellipse 60% 40% at 50% 20%, rgba(203, 166, 247, 0.08) 0%, transparent 70%),
+          radial-gradient(ellipse 40% 30% at 20% 70%, rgba(137, 180, 250, 0.05) 0%, transparent 60%);
       }
     }
   </style>
@@ -460,7 +495,7 @@
     <a href="status.html">Status</a>
     <a href="report.html">Support</a>
     <a href="#" onclick="goClient(event)"
-      style="border:1px solid #45475a;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
+      style="border:1px solid #bcc0cc;border-radius:10px;text-align:center;margin-top:8px">Mon espace client</a>
   </div>
 
   <select id="mobile-mod-sel" onchange="if(this.value!=='')openModule(+this.value)">
